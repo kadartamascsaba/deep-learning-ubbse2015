@@ -2,5 +2,5 @@
 Babeş-Bolyai University
 ## Deep learning methods for speaker recognition
 
-The project will use the [ELSDSR](http://www.imm.dtu.dk/~lfen/elsdsr/) database for training and testing, but we also might generate additional data whit noise samples from the [PRISM-set](https://code.google.com/p/prism-set/) to increase accuracy.
+The project will use the [ELSDSR](http://www.imm.dtu.dk/~lfen/elsdsr/) database for training and testing, but we also might generate additional data with noise samples from the [PRISM-set](https://code.google.com/p/prism-set/) to increase accuracy.
 
