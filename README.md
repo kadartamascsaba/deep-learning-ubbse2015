@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/triqla/deep-learning-ubbse2015.png?label=ready&title=Ready)](https://waffle.io/triqla/deep-learning-ubbse2015)
 # deep-learning-ubbse2015
 Babeş-Bolyai University
 ## Deep learning methods for speaker recognition
