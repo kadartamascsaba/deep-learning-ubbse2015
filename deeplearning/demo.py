@@ -13,11 +13,10 @@ from os import path
 import gzip
 import cPickle
 
-import numpy
-import theano
 
 import neuralnetwork as nn
-
+import numpy
+import theano
 
 def load_data(dataset):
     ''' Loads the dataset
@@ -67,17 +66,18 @@ def main(dataset='mnist.pkl.gz'):
     n.add_hidden_layer(28**2, 500)		# Adding a hidden layer which input length is 28**2 and output length is 500
     n.compile_model()					# Generating the network's training and evaluating model
 
-  	# We train the network 100 times
-  	# Each time we evaluate the results and write out the error percentage
+    # We train the network 100 times
+    # Each time we evaluate the results and write out the error percentage
     for epoch in range(1, 101):
-    	print '... training'
+        print '... training'
 
         for x, y in train_examples:
             n.train_model(x, y)
-
+            
         # compute zero-one loss on validation set
         error = numpy.mean([n.evaluate_model(x, y) for x, y in dev_examples])
         print('epoch %i, validation error %f %%' % (epoch, error * 100))
+
 
 
 if __name__ == '__main__':

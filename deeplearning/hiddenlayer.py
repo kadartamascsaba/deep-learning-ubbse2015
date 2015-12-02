@@ -60,4 +60,10 @@ class HiddenLayer(object):
         self.b = theano.shared(value=b_values, name='b', borrow=True)
 
         # Creating the output vector using the tanh activation function
-        self.output = T.tanh(T.dot(self.input, self.W) + self.b)        
+        self.output = T.tanh(T.dot(self.input, self.W) + self.b)  
+
+    def setW(self, W, b):
+        self.W = theano.shared(value=np.asarray(W, dtype=theano.config.floatX), name='W', borrow=True)
+        self.b = theano.shared(value=np.asarray(b, dtype=theano.config.floatX), name='b', borrow=True)
+
+        self.output = T.tanh(T.dot(self.input, self.W) + self.b)
