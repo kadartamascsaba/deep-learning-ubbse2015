@@ -74,7 +74,7 @@ class Net:
 
     # Procedure for creating the training and evaluating model
     # It is like a compilation
-    def compile_model(self):
+    def compile_model(self, weightMatrix=None):
 
         x = T.vector('x')  # Features
         y = T.iscalar('y') # (Gold) Label
@@ -84,12 +84,17 @@ class Net:
         n_in, n_out = params.pop(0)
         self.hidden_layers.append(HL.HiddenLayer(x, n_in, n_out))
 
+        if weightMatrix:
+            self.hidden_layers[0].setW(weightMatrix[0][0], weightMatrix[0][1])
+            weightMatrix.pop(0)
 
         # Creating the rest hidden layers
         # Each layers input is the previous layer's output
         for i in xrange(len(params)):
             n_in, n_out = params[i]
             self.hidden_layers.append(HL.HiddenLayer(self.hidden_layers[-1].output, n_in, n_out))
+            if weightMatrix:
+                self.hidden_layers[-1].setW(weightMatrix[i][0], weightMatrix[i][1])
 
         # Creating the logistical regression layer
         self.logreg_layer = LL.LogRegLayer(self.hidden_layers[-1].output, self.hidden_layers[-1].n_out, self.classes)
@@ -136,3 +141,17 @@ class Net:
 
         with open(filename, 'w') as outfile:
             json.dump(output, outfile)
+
+    # Fills the neural network with data loaded from json formatted data
+    def load(self, filename='matrix.txt'):
+
+        with open(filename, 'r') as infile:
+            data = json.load(infile)
+
+        self.classes                = data['classes']
+        self.learning_rate          = data['learning_rate']
+        self.L1_reg                 = data['L1']
+        self.L2_reg                 = data['L2']
+        self.hidden_layers_params   = data['hidden_params']
+
+        self.compile_model(data['w_matrix'])
