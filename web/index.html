@@ -3,9 +3,10 @@
 	<head>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="css/front_page.css">
+		<link rel="stylesheet" type="text/css" href="css/ngDialog.min.css">
 		<script src="js/angular.js"></script>
 		<script src="js/index.js"></script>
-		<script src="js/ngFacebook.js"></script>
+		<script src="js/ngDialog.min.js"></script>
 		<style>
 			ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
 				display: none !important;
@@ -16,33 +17,14 @@
 	<body ng-controller="myCtrl" ng-cloak class="full">
 		<div class="row">
 			<div class="col-md-offset-4 col-md-4" style="text-align:center;">
-				<h1>Web Voice Call</h1>
+				<h1>WebVoiceCall</h1>
 				<h3>... short description here ...</h3>
 				<div id="loginBox">
 					<h2>Log in</h2>
-					<div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true"></div>
-					<div id="status">
+					<a class="demo" ng-click="clickToOpen()" href="#">Demo</a>
 					</div>
 				</div>
 			</div>
-		</div>
-		
-		
-		<h1>ngFacebook tests</h1>
-		<div>
-			<h2>Login</h2>
-			<button id="login-btn" ng-click="loginToggle()">
-				<span ng-if="status">Logout</span>
-				<span ng-if="!status">Login</span>
-			</button>
-			<span ng-if="status" class="message">
-				You are <strong>Logged in</strong> as <em>{{user.first_name}} {{user.last_name}} {{user}}</em>
-			</span>
-			<span ng-if="!status" class="message">
-				You are <strong>not</strong> logged in.
-			</span>
-		</div>
-		
-		
+		</div>		
 	</body>
 </html>
