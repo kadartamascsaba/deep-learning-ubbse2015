@@ -41,13 +41,16 @@ def stft(data, fs, framesize = 0.075, hopsize = 0.0625):
     hopSamp = int(hopsize * fs)
     window = scipy.hanning(frameSamp)
 
-    threshold = numpy.mean(numpy.absolute(data))*0.15
+    threshold = numpy.mean(numpy.absolute(data))*0.30
     
     X = numpy.array([numpy.absolute(scipy.fft(window * data[i : (i + frameSamp)])) for i in xrange(0, len(data) - frameSamp, hopSamp) if numpy.mean(numpy.absolute(data[i : (i + frameSamp)])) > threshold])
 
     # Deleting the second half of each row
     # Fourier Transform gives Hermite-symmetric result for real-valued input
     X = numpy.array([X[i][: numpy.ceil((X.shape[1] + 1.0) / 2)] for i in xrange(0, X.shape[0])])
+
+    #Normalizing
+    X = numpy.array([X[i] / numpy.linalg.norm(X[i]) for i in xrange(0, X.shape[0])])
     
     return X
 
