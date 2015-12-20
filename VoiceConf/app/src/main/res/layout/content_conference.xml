@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ConferenceActivity"
+    tools:showIn="@layout/activity_conference">
+
+    <TextView
+        android:id="@+id/history_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:drawablePadding="@dimen/large_padding"
+        android:drawableTop="@drawable/placeholder_conference"
+        android:gravity="center"
+        android:text="Jon Snow"
+        android:textSize="@dimen/text_size_title" />
+
+    <TextView
+        android:layout_below="@id/history_placeholder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_padding"
+        android:gravity="center"
+        android:text="The current speak will appear above\n other will be underneath in a grid." />
+
+</RelativeLayout>

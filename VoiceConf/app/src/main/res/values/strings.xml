@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">VoiceConf</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_conference_list">Conference history</string>
+    <string name="title_conference_detail">Conference Detail</string>
+    <string name="title_activity_conference">Conference</string>
+</resources>
