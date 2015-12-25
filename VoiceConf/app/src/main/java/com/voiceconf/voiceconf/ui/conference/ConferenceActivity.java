@@ -1,4 +1,4 @@
-package com.voiceconf.voiceconf;
+package com.voiceconf.voiceconf.ui.conference;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -7,6 +7,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.voiceconf.voiceconf.R;
+
+/**
+ * Created by Attila Blenesi on 20 Dec 2015
+ */
 public class ConferenceActivity extends AppCompatActivity {
 
     @Override
