@@ -1,0 +1,51 @@
+{
+  "project_info": {
+    "project_id": "voiceconf-1170",
+    "project_number": "1019622997176",
+    "name": "VoiceConf"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1019622997176:android:c31bc03b7dfedf18",
+        "client_id": "android:com.voiceconf.voiceconf",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.voiceconf.voiceconf"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1019622997176-pdkrtlm7j0o9l7o8ijd18jpqhb6mn1hc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.voiceconf.voiceconf",
+            "certificate_hash": "985290AECC043609A02B1A54FB4EB206013016C7"
+          }
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
