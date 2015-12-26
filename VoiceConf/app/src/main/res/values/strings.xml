@@ -17,7 +17,10 @@
     <!--Friends-->
     <string name="friends_placeholder_text">Your friends and\n invites will appear here …</string>
     <string name="friends_guide_text">Add a new friend by tapping\n the action button!</string>
+<<<<<<< HEAD
     <string name="login_call_to_action">smart voice \nconferencing</string>
     <string name="login_failed">Connection failed :(</string>
+=======
+>>>>>>> dc1878e2ad56d9f7a607cf364aebacf113dbc51f
 
 </resources>
