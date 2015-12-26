@@ -19,5 +19,8 @@
     <string name="friends_guide_text">Add a new friend by tapping\n the action button!</string>
     <string name="login_call_to_action">smart voice \nconferencing</string>
     <string name="login_failed">Connection failed :(</string>
+    <string name="something_went_wrong">Something went wrong.</string>
+    <string name="retry">RETRY</string>
+    <string name="title_activity_landing">LandingActivity</string>
 
 </resources>

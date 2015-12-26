@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.auth.api.Auth;
@@ -13,7 +14,13 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import com.parse.ParseException;
+import com.parse.SignUpCallback;
+
 import com.voiceconf.voiceconf.R;
+import com.voiceconf.voiceconf.storage.models.User;
+import com.voiceconf.voiceconf.ui.main.MainActivity;
 
 
 /**
@@ -21,16 +28,17 @@ import com.voiceconf.voiceconf.R;
  */
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
+    private static final String TAG = "LoginActivity";
     private static final int RC_SIGN_IN = 9001;
+    private static final String GOOGLE_USER_ID = "{\"GoogleUserID\" : \"";
+    private static final String AUTH_DATA_END = "\"}";
+    private static final String DEFAULT_PASSWORD = "voiceConf";
     private GoogleApiClient mGoogleApiClient;
     private SignInButton mSignInButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /*Parse.enableLocalDatastore(this);
-        Parse.initialize(this);*/
 
         setContentView(R.layout.activity_login);
 
@@ -57,7 +65,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 startActivityForResult(signInIntent, RC_SIGN_IN);
             }
         });
-
     }
 
     @Override
@@ -72,10 +79,45 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
+                // Request was successful => creating new user
                 GoogleSignInAccount acct = result.getSignInAccount();
-                System.out.println(acct.getDisplayName() + " " + acct.getEmail() + " " + acct.getPhotoUrl());
+                User user = new User();
+                user.setUsername(acct.getDisplayName());
+                user.setEmail(acct.getEmail());
+                user.setPassword(DEFAULT_PASSWORD); // This field must be set to create a user.
+                user.setAvatar(acct.getPhotoUrl().toString());
+                user.setUserData(GOOGLE_USER_ID + acct.getId() + AUTH_DATA_END);
+
+                // Start sign up request to parse.com
+                user.signUpInBackground(new SignUpCallback() {
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            // Creating user was successful starting the main activity
+                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        } else {
+                            Log.d(TAG, "done: " + e.toString());
+                            somethingWentWrong();
+                        }
+                    }
+                });
+            } else {
+                somethingWentWrong();
             }
         }
     }
 
+    /**
+     * Something went wrong notifying the user
+     */
+    private void somethingWentWrong(){
+        Snackbar.make(mSignInButton, R.string.something_went_wrong, Snackbar.LENGTH_LONG)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mSignInButton.performClick();
+                    }
+                })
+                .show();
+
+    }
 }
