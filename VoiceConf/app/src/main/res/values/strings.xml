@@ -22,5 +22,9 @@
     <string name="something_went_wrong">Something went wrong.</string>
     <string name="retry">RETRY</string>
     <string name="title_activity_landing">LandingActivity</string>
+    <string name="add_friend">Add friend</string>
+    <string name="cancel">cancel</string>
+    <string name="email">Email</string>
+    <string name="add_friend_dialog_text">Enter your registered friends email address.</string>
 
 </resources>

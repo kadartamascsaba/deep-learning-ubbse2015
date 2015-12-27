@@ -7,6 +7,8 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
 
+    <dimen name="min_view_height">48dp</dimen>
+
     <!-- Text sizes -->
     <dimen name="text_size_small">10sp</dimen>
     <dimen name="text_size_caption">12sp</dimen>
