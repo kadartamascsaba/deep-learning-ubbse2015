@@ -32,7 +32,6 @@
 
         <activity
             android:name=".ui.LandingActivity"
-            android:label="@string/title_activity_landing"
             android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
