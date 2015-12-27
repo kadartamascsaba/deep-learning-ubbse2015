@@ -1,8 +1,3 @@
-/**
- * Copyright 2015 Halcyon Mobile
- * http://www.halcyonmobile.com
- * All rights reserved.
- */
 package com.voiceconf.voiceconf.storage.models;
 
 import com.parse.ParseUser;
@@ -12,10 +7,10 @@ import com.parse.ParseUser;
  */
 public class User extends ParseUser {
 
-    // username - The users public full name
-    // email    - The users email address
-    private static final String AVATAR = "avatar"; // - string Url to user profile image
-    private static final String USER_DATA = "userData"; // - Contains a JSON example:
+    public static final String USER_NAME = "username";//  - The users public full name
+    public static final String EMAIL = "email"; //        - The users email address
+    public static final String AVATAR = "avatar"; //      - String Url to user profile image
+    public static final String USER_DATA = "userData"; // - Contains a JSON example:
     /**
      * {
      * "GoogleId" : "<The users Google Id>",
@@ -23,19 +18,19 @@ public class User extends ParseUser {
      * }
      */
 
-    public User(){
+    public User() {
         super();
     }
 
-    public void setUserData(String authData) {
-        put(USER_DATA, authData);
+    public static void setUserData(ParseUser parseUser, String authData) {
+        parseUser.put(USER_DATA, authData);
     }
 
-    public String getAvatar() {
-        return getString(AVATAR);
+    public static String getAvatar(ParseUser parseUser) {
+        return parseUser.getString(AVATAR);
     }
 
-    public void setAvatar(String avatar) {
-        put(AVATAR, avatar);
+    public static void setAvatar(ParseUser parseUser, String avatar) {
+        parseUser.put(AVATAR, avatar);
     }
 }
