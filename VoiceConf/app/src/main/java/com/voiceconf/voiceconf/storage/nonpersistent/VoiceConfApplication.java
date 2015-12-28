@@ -14,12 +14,20 @@ import com.voiceconf.voiceconf.storage.models.User;
  */
 public class VoiceConfApplication extends Application {
 
+    //region VARIABLES
+    private static DataManager sDataManager;
+    //endregion
+
+    //region LIFE CYCLE METHODS
     /**
      * This method is called first, when the application starts.
      */
     @Override
     public void onCreate() {
         super.onCreate();
+
+        // DataManager initialisation
+        sDataManager = new DataManager();
 
         // Parse initialization
         Parse.enableLocalDatastore(this);
@@ -29,4 +37,11 @@ public class VoiceConfApplication extends Application {
         ParseObject.registerSubclass(User.class);
 
     }
+    //endregion
+
+    //region GETTER
+    public static DataManager getDataManager() {
+        return sDataManager;
+    }
+    //endregion
 }
