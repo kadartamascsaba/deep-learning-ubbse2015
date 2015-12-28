@@ -1,4 +1,4 @@
-package com.voiceconf.voiceconf.storage;
+package com.voiceconf.voiceconf.storage.nonpersistent;
 
 import android.app.Application;
 
