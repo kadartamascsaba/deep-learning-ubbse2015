@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.parse.Parse;
 import com.parse.ParseObject;
+import com.voiceconf.voiceconf.storage.models.Friend;
 import com.voiceconf.voiceconf.storage.models.User;
 
 /**
@@ -35,6 +36,7 @@ public class VoiceConfApplication extends Application {
 
         // Registering the ParseObject subclasses
         ParseObject.registerSubclass(User.class);
+        ParseObject.registerSubclass(Friend.class);
 
     }
     //endregion
