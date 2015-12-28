@@ -24,6 +24,8 @@ import com.voiceconf.voiceconf.storage.models.User;
 import com.voiceconf.voiceconf.ui.conference.ConferenceDetailActivity;
 import com.voiceconf.voiceconf.R;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * This is the main activity witch greets the user contains a tabbed layout with recent user
  * activity and friend management.
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity
         ParseUser currentUser = User.getCurrentUser();
 
         View header = navigationView.getHeaderView(0);
-        ImageView avatarView = (ImageView) header.findViewById(R.id.user_avatar);
+        CircleImageView avatarView = (CircleImageView) header.findViewById(R.id.user_avatar);
         TextView emailView = (TextView) header.findViewById(R.id.user_email);
         TextView nameView = (TextView) header.findViewById(R.id.user_name);
 

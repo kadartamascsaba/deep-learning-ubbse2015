@@ -7,22 +7,33 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.main.MainActivity">
 
-    <TextView
-        android:id="@+id/history_placeholder"
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:drawablePadding="@dimen/large_padding"
-        android:drawableTop="@drawable/placeholder_invite"
-        android:gravity="center"
-        android:layout_centerInParent="true"
-        android:text="@string/friends_placeholder_text"
-        android:textSize="@dimen/text_size_title" />
+        android:layout_height="match_parent" />
 
-    <TextView
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/history_placeholder"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/history_placeholder"
-        android:layout_marginTop="@dimen/large_padding"
-        android:gravity="center"
-        android:text="@string/friends_guide_text" />
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/large_padding"
+            android:drawableTop="@drawable/placeholder_invite"
+            android:gravity="center"
+            android:text="@string/friends_placeholder_text"
+            android:textSize="@dimen/text_size_title" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding"
+            android:gravity="center"
+            android:text="@string/friends_guide_text" />
+    </LinearLayout>
+
 </RelativeLayout>
