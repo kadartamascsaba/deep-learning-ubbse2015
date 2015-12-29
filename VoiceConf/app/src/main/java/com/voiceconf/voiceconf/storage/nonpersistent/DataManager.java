@@ -1,8 +1,3 @@
-/**
- * Copyright 2015 Halcyon Mobile
- * http://www.halcyonmobile.com
- * All rights reserved.
- */
 package com.voiceconf.voiceconf.storage.nonpersistent;
 
 import com.voiceconf.voiceconf.storage.models.Friend;

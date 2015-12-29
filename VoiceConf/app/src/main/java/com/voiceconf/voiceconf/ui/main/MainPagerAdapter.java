@@ -1,8 +1,3 @@
-/**
- * Copyright 2015 Halcyon Mobile
- * http://www.halcyonmobile.com
- * All rights reserved.
- */
 package com.voiceconf.voiceconf.ui.main;
 
 import android.content.Context;
