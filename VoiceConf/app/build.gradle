@@ -6,7 +6,7 @@ android {
         debug {
             keyAlias 'android_debug_key'
             keyPassword 'android'
-            storeFile file('/Users/halcyon/deep-learning-ubbse2015/VoiceConf/debug.jks')
+            storeFile file('../debug.jks')
             storePassword 'android'
         }
     }
