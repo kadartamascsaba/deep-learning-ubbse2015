@@ -16,7 +16,7 @@ import com.voiceconf.voiceconf.storage.models.User;
 public class VoiceConfApplication extends Application {
 
     //region VARIABLES
-    private static DataManager sDataManager;
+    public static DataManager sDataManager;
     //endregion
 
     //region LIFE CYCLE METHODS
@@ -38,12 +38,6 @@ public class VoiceConfApplication extends Application {
         ParseObject.registerSubclass(User.class);
         ParseObject.registerSubclass(Friend.class);
 
-    }
-    //endregion
-
-    //region GETTER
-    public static DataManager getDataManager() {
-        return sDataManager;
     }
     //endregion
 }

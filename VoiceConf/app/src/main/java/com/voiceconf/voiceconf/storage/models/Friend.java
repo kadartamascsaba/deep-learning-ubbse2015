@@ -1,8 +1,3 @@
-/**
- * Copyright 2015 Halcyon Mobile
- * http://www.halcyonmobile.com
- * All rights reserved.
- */
 package com.voiceconf.voiceconf.storage.models;
 
 import com.parse.ParseClassName;
@@ -18,9 +13,9 @@ import com.parse.ParseUser;
 public class Friend extends ParseObject{
 
     //region CONSTANTS
-    private static final String USER_ID = "userId";
-    private static final String FRIEND_ID = "friendId";
-    private static final String PENDING = "pending";
+    public static final String USER_ID = "userId";
+    public static final String FRIEND_ID = "friendId";
+    public static final String PENDING = "pending";
     //endregion
 
     //region GETTERS / SETTERS
