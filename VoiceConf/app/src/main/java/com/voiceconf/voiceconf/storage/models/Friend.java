@@ -7,6 +7,7 @@ package com.voiceconf.voiceconf.storage.models;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 /**
  * Helper class to manage friends.
@@ -23,20 +24,20 @@ public class Friend extends ParseObject{
     //endregion
 
     //region GETTERS / SETTERS
-    public String getUserId() {
-        return getString(USER_ID);
+    public ParseUser getUser() {
+        return getParseUser(USER_ID);
     }
 
-    public void setUserId(String userId) {
-        put(USER_ID, userId);
+    public void setUser(String userId) {
+        put(USER_ID, ParseUser.createWithoutData(ParseUser.class, userId));
     }
 
-    public String getFriendId() {
-        return getString(FRIEND_ID);
+    public ParseUser getFriend() {
+        return getParseUser(FRIEND_ID);
     }
 
-    public void setFriendId(String friendId) {
-        put(FRIEND_ID, friendId);
+    public void setFriend(String friendId) {
+        put(FRIEND_ID, ParseUser.createWithoutData(ParseUser.class, friendId));
     }
 
     public boolean isPending() {

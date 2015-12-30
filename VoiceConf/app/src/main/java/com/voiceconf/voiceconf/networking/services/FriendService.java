@@ -33,8 +33,8 @@ public class FriendService {
             @Override
             public void done(ParseUser parseUser, ParseException e) {
                 if (parseUser != null) {
-                    friend.setFriendId(parseUser.getObjectId());
-                    friend.setUserId(User.getCurrentUser().getObjectId());
+                    friend.setFriend(parseUser.getObjectId());
+                    friend.setUser(User.getCurrentUser().getObjectId());
                     friend.setPending(true);
                     friend.saveInBackground(new SaveCallback() {
                         @Override
