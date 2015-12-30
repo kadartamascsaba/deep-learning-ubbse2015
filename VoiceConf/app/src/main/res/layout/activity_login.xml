@@ -21,7 +21,8 @@
         android:text="@string/login_call_to_action"
         android:textAllCaps="true"
         android:textColor="@color/icons"
-        android:textSize="@dimen/text_size_title" />
+        android:textSize="@dimen/text_size_title"
+        android:id="@+id/textView2" />
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/sign_in_button"
@@ -30,4 +31,14 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/large_padding" />
 
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/fb_login_button"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_above="@+id/sign_in_button"
+        android:layout_alignLeft="@+id/sign_in_button"
+        android:layout_alignStart="@+id/sign_in_button"
+        android:layout_alignRight="@+id/sign_in_button"
+        android:layout_alignEnd="@+id/sign_in_button" />
 </RelativeLayout>

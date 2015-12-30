@@ -19,5 +19,7 @@
     <string name="friends_guide_text">Add a new friend by tapping\n the action button!</string>
     <string name="login_call_to_action">smart voice \nconferencing</string>
     <string name="login_failed">Connection failed :(</string>
+    <!--Facebook login-->
+    <string name="facebook_app_id">1000732483317996</string>
 
 </resources>

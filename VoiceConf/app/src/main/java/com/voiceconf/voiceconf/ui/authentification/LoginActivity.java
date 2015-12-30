@@ -6,6 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -24,13 +31,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private static final int RC_SIGN_IN = 9001;
     private GoogleApiClient mGoogleApiClient;
     private SignInButton mSignInButton;
+    private LoginButton fbLoginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        /*Parse.enableLocalDatastore(this);
-        Parse.initialize(this);*/
+        FacebookSdk.sdkInitialize(getApplicationContext());
 
         setContentView(R.layout.activity_login);
 
@@ -55,6 +61,28 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onClick(View v) {
                 Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
                 startActivityForResult(signInIntent, RC_SIGN_IN);
+            }
+        });
+
+        fbLoginButton = (LoginButton) findViewById(R.id.fb_login_button);
+        fbLoginButton.setReadPermissions("user_friends");
+        CallbackManager callbackManager = CallbackManager.Factory.create();
+
+        // Callback registration
+        fbLoginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                // App code
+            }
+
+            @Override
+            public void onCancel() {
+                // App code
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                // App code
             }
         });
 
