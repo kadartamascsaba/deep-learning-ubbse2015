@@ -20,7 +20,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
+
+import com.parse.GetCallback;
+import com.parse.LogInCallback;
+import com.parse.ParseException;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
+import com.parse.SignUpCallback;
+
 import com.voiceconf.voiceconf.R;
+import com.voiceconf.voiceconf.storage.models.User;
+import com.voiceconf.voiceconf.ui.main.MainActivity;
 
 
 /**
@@ -29,6 +40,10 @@ import com.voiceconf.voiceconf.R;
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
     private static final int RC_SIGN_IN = 9001;
+    private static final String GOOGLE_USER_ID = "{\"GoogleUserID\" : \"";
+    private static final String FACEBOOK_USER_ID = "{\"FacebookUserID\" : \"";
+    private static final String AUTH_DATA_END = "\"}";
+    private static final String DEFAULT_PASSWORD = "voiceConf";
     private GoogleApiClient mGoogleApiClient;
     private SignInButton mSignInButton;
     private LoginButton fbLoginButton;
@@ -100,10 +115,77 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
-                GoogleSignInAccount acct = result.getSignInAccount();
-                System.out.println(acct.getDisplayName() + " " + acct.getEmail() + " " + acct.getPhotoUrl());
+                final GoogleSignInAccount acct = result.getSignInAccount();
+                // Request was successful => checking if the user exists
+                ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
+                userQuery.whereEqualTo(User.EMAIL, acct.getEmail());
+                userQuery.getFirstInBackground(new GetCallback<ParseUser>() {
+                    @Override
+                    public void done(ParseUser parseUser, ParseException e) {
+                        if (parseUser == null) {
+                            // User does not exists => creating new user
+                            User user = new User();
+                            user.setUsername(acct.getDisplayName());
+                            user.setEmail(acct.getEmail());
+                            user.setPassword(DEFAULT_PASSWORD); // This field must be set to create a user
+
+                            // Start sign up request to parse.com
+                            user.signUpInBackground(new SignUpCallback() {
+                                public void done(ParseException e) {
+                                    if (e == null) {
+                                        User registeredUser = User.createWithoutData(User.class, User.getCurrentUser().getObjectId());
+                                        User.setAvatar(registeredUser, acct.getPhotoUrl().toString());
+                                        User.setUserData(registeredUser, GOOGLE_USER_ID + acct.getId() + AUTH_DATA_END);
+
+                                        registeredUser.saveInBackground(new SaveCallback() {
+                                            @Override
+                                            public void done(ParseException e) {
+                                                if (e == null) {
+                                                    // Creating user was successful starting the main activity
+                                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                                } else {
+                                                    somethingWentWrong();
+                                                }
+                                            }
+                                        });
+                                    } else {
+                                        somethingWentWrong();
+                                    }
+                                }
+                            });
+                        } else {
+                            // User exists => Start Log In request to parse.com
+                            ParseUser.logInInBackground(acct.getDisplayName(), DEFAULT_PASSWORD, new LogInCallback() {
+                                @Override
+                                public void done(ParseUser parseUser, ParseException e) {
+                                    if (e == null) {
+                                        // Existing user logged in successfully starting the main activity
+                                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                    } else {
+                                        somethingWentWrong();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            } else {
+                somethingWentWrong();
             }
         }
     }
 
+    /**
+     * Something went wrong notifying the user
+     */
+    private void somethingWentWrong() {
+        Snackbar.make(mSignInButton, R.string.something_went_wrong, Snackbar.LENGTH_LONG)
+                .setAction(R.string.retry, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mSignInButton.performClick();
+                    }
+                })
+                .show();
+    }
 }

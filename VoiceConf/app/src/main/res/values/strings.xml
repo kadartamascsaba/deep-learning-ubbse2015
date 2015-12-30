@@ -19,6 +19,13 @@
     <string name="friends_guide_text">Add a new friend by tapping\n the action button!</string>
     <string name="login_call_to_action">smart voice \nconferencing</string>
     <string name="login_failed">Connection failed :(</string>
+    <string name="something_went_wrong">Something went wrong.</string>
+    <string name="retry">RETRY</string>
+    <string name="title_activity_landing">LandingActivity</string>
+    <string name="add_friend">Add friend</string>
+    <string name="cancel">cancel</string>
+    <string name="email">Email</string>
+    <string name="add_friend_dialog_text">Enter your registered friends email address.</string>
     <!--Facebook login-->
     <string name="facebook_app_id">1000732483317996</string>
 

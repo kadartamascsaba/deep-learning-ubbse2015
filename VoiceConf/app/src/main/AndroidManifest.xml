@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name=".storage.models.VoiceConfApplication"
+        android:name=".storage.nonpersistent.VoiceConfApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -21,20 +21,31 @@
         <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
         <activity
             android:name=".ui.main.MainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.conference.ConferenceDetailActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_conference_detail"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.conference.ConferenceActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_conference"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.authentification.LoginActivity"
+        <activity
+            android:name=".ui.authentification.LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
+        <activity
+            android:name=".ui.LandingActivity"
+            android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
