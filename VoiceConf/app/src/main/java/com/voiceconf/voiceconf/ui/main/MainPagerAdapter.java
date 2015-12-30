@@ -1,8 +1,3 @@
-/**
- * Copyright 2015 Halcyon Mobile
- * http://www.halcyonmobile.com
- * All rights reserved.
- */
 package com.voiceconf.voiceconf.ui.main;
 
 import android.content.Context;
@@ -22,9 +17,9 @@ import com.voiceconf.voiceconf.ui.main.history.HistoryFragment;
 public class MainPagerAdapter extends FragmentPagerAdapter {
 
     //region CONSTANTS
-    private static final int ITEM_COUNT = 2;
-    private static final int HISTORY_TAB = 0;
-    private static final int FRIENDS_TAB = 1;
+    public static final int ITEM_COUNT = 2;
+    public static final int HISTORY_TAB = 0;
+    public static final int FRIENDS_TAB = 1;
     //endregion
 
     //region VARIABLES
