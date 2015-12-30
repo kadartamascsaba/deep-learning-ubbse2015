@@ -12,7 +12,7 @@ import java.util.Observable;
  */
 public class DataManager extends Observable {
 
-    private static final int FRIENDS_UPDATED = 1; // Data type for observer notification
+    public static final int FRIENDS_UPDATED = 1; // Data type for observer notification
 
     private List<Friend> mFriends;
 

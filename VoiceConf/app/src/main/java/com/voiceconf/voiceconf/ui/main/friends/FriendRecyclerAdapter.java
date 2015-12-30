@@ -1,7 +1,6 @@
 package com.voiceconf.voiceconf.ui.main.friends;
 
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,9 +10,11 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.parse.ParseUser;
 import com.voiceconf.voiceconf.R;
 import com.voiceconf.voiceconf.storage.models.Friend;
+import com.voiceconf.voiceconf.storage.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,6 +113,7 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         private void setup(ParseUser user) {
             // Load friend name
             if (user != null ) {
+                Glide.with(itemView.getContext()).load(User.getAvatar(user)).into((ImageView) itemView.findViewById(R.id.user_avatar));
                 if (!TextUtils.isEmpty(user.getUsername())) {
                     mFriendName.setText(user.getUsername());
                 }
