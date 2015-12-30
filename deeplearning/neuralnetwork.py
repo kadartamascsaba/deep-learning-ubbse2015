@@ -8,6 +8,8 @@ import theano.tensor as T
 import hiddenlayer as HL            # HiddenLayer class import
 import logreglayer as LL            # LogRegLayer class import
 
+import spectrogram as sg
+
 class Net:
     
     ''' Neural network class
@@ -38,7 +40,7 @@ class Net:
     '''
     
     # Constructor
-    def __init__(self, classes, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001):
+    def __init__(self, classes=None, learning_rate=0.01, L1_reg=0.00, L2_reg=0.0001):
         
         self.logreg_layer           = None
         self.hidden_layers_params   = []
@@ -97,7 +99,7 @@ class Net:
                 self.hidden_layers[-1].setW(weightMatrix[i][0], weightMatrix[i][1])
 
         # Creating the logistical regression layer
-        self.logreg_layer = LL.LogRegLayer(self.hidden_layers[-1].output, self.hidden_layers[-1].n_out, self.classes)
+        self.logreg_layer = LL.LogRegLayer(self.hidden_layers[-1].output, self.hidden_layers[-1].n_out, len(self.classes))
         if weightMatrix:
             self.logreg_layer.setW(weightMatrix[-1][0], weightMatrix[-1][1])
 
@@ -124,9 +126,14 @@ class Net:
 
         # Creating the evaluating model which is a theano function
         # Inputs are a feature vector and a label
-        self.evaluate_model = theano.function(
+        self.devtest_model = theano.function(
             inputs  = [x, y],
             outputs = T.neq(y, T.argmax(self.logreg_layer.output[0]))
+        )
+
+        self.evaluate_model = theano.function( 
+            inputs  = [x],
+            outputs = T.argmax(self.logreg_layer.output[0])
         )
 
 
@@ -158,3 +165,11 @@ class Net:
         self.hidden_layers_params   = data['hidden_params']
 
         self.compile_model(data['w_matrix'])
+
+
+    def evaluate(self, sound):
+
+        stgrm    = sg.generate_spectrogram(sound)
+        elements = [self.evaluate_model(x).tolist() for x in stgrm]
+        position = max(set(elements), key=elements.count)
+        return self.classes[position]
