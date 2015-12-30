@@ -98,6 +98,8 @@ class Net:
 
         # Creating the logistical regression layer
         self.logreg_layer = LL.LogRegLayer(self.hidden_layers[-1].output, self.hidden_layers[-1].n_out, self.classes)
+        if weightMatrix:
+            self.logreg_layer.setW(weightMatrix[-1][0], weightMatrix[-1][1])
 
         # Calculating the cost of the network
         # The cost is the negative log likelihood of gold label + L1 and L2 regressions
@@ -138,6 +140,7 @@ class Net:
         output['L2']            = self.L2_reg
         output['hidden_params'] = self.hidden_layers_params
         output['w_matrix']      = [(hidden.W.get_value().tolist(), hidden.b.get_value().tolist()) for hidden in self.hidden_layers]
+        output['w_matrix'].append((self.logreg_layer.W.get_value().tolist(), self.logreg_layer.b.get_value().tolist()))
 
         with open(filename, 'w') as outfile:
             json.dump(output, outfile)

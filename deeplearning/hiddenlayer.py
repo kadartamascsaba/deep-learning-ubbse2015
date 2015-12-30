@@ -28,9 +28,9 @@ class HiddenLayer(object):
     def __init__(self, input_, n_in, n_out):
         
         # If @n_in is lesser than @n_out then we write out an error message and terminate the program
-        if n_in < n_out:
-            print 'Error at LogRegLayer __init__: n_in < n_out!'
-            exit(1)
+        # if n_in < n_out:
+        #    print 'Error at LogRegLayer __init__: n_in < n_out!'
+        #    exit(1)
 
         self.input  = input_
         self.n_in   = n_in

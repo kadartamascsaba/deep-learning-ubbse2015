@@ -27,9 +27,9 @@ class LogRegLayer(object):
     def __init__(self, input_, n_in, n_out):
         
         # If @n_in is lesser than @n_out then we write out an error message and terminate the program    
-        if n_in < n_out:
-            print 'Error at LogRegLayer __init__: n_in < n_out!'
-            exit(1)
+        # if n_in < n_out:
+        #     print 'Error at LogRegLayer __init__: n_in < n_out!'
+        #     exit(1)
 
         self.input  = input_
 
@@ -50,7 +50,8 @@ class LogRegLayer(object):
         self.output = T.nnet.softmax(T.dot(self.input, self.W) + self.b)
 
     def setW(self, W, b):
-        self.W = theano.shared(value=W, name='W', borrow=True)
-        self.b = theano.shared(value=b, name='b', borrow=True)
+        self.W = theano.shared(value=np.asarray(W, dtype=theano.config.floatX), name='W', borrow=True)
+        self.b = theano.shared(value=np.asarray(b, dtype=theano.config.floatX), name='b', borrow=True)
 
-        self.output = T.tanh(T.dot(self.input, self.W) + self.b)
+        # Generating the output vector
+        self.output = T.nnet.softmax(T.dot(self.input, self.W) + self.b)
