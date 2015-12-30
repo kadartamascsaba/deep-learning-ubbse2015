@@ -7,13 +7,20 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.main.MainActivity">
 
-    <android.support.v7.widget.RecyclerView
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/friend_swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:listitem="@layout/item_friend"/>
+        android:layout_height="match_parent">
+
+        <com.voiceconf.voiceconf.ui.view.RecyclerViewWithPlaceholder
+            android:id="@+id/friend_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_friend" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout
-        android:id="@+id/history_placeholder"
+        android:id="@+id/friend_placeholder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
