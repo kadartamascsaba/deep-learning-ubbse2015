@@ -8,7 +8,7 @@ import os
 import sys
 import time
 from os import path
-
+from os.path import isfile, join
 
 import gzip
 import cPickle
@@ -17,67 +17,102 @@ import cPickle
 import neuralnetwork as nn
 import numpy
 import theano
+import spectrogram as sg
 
-def load_data(dataset):
-    ''' Loads the dataset
-    :type dataset: string
-    :param dataset: the path to the dataset (here MNIST)
-    '''
-    # Download the MNIST dataset if it is not present
-    data_dir, data_file = os.path.split(dataset)
-    if data_dir == "" and not os.path.isfile(dataset):
-        # Check if dataset is in the data directory.
-        data_dir = os.path.join(os.path.split(__file__)[0], "..", "data")
-        if not path.exists(data_dir):
-            print "No data directory to save data to. Try:"
-            print "mkdir ../data"
-            sys.exit(1)
-        new_path = path.join(data_dir, data_file)
-        if os.path.isfile(new_path) or data_file == 'mnist.pkl.gz':
-            dataset = new_path
+def load_data(train_dir, test_dir):
+    
+    train_input = [f for f in os.listdir(train_dir) if isfile(join(train_dir, f))]
+    test_input  = [f for f in os.listdir(test_dir) if isfile(join(test_dir, f))]
+    
+    classes   = []
+    train_set = []
+    test_set  = []
 
-    if (not os.path.isfile(dataset)) and data_file == 'mnist.pkl.gz':
-        import urllib
-        url = 'http://www.iro.umontreal.ca/~lisa/deep/data/mnist/mnist.pkl.gz'
-        print 'Downloading data from %s' % url
-        urllib.urlretrieve(url, dataset)
+    # Training data
+    for element in train_input:
+        
+        elem_id = element.split(".")[0].split("_")[0]
 
-    print '... loading data'
+        try:
+            index = classes.index(elem_id)
+        except:
+            index = len(classes)
+            classes.append(elem_id)
 
-    # Load the dataset
-    with gzip.open(dataset, 'rb') as f:
-        train_set, valid_set, test_set = cPickle.load(f)
-    return _make_array(train_set), _make_array(valid_set), _make_array(test_set)
+        stgrm = sg.generate_spectrogram(join(train_dir, element))
+
+        train_set.extend(_make_array(stgrm, index))
+
+    # Test data
+    for element in test_input:
+        
+        elem_id = element.split(".")[0].split("_")[0]
+
+        if elem_id in classes:
+            index = classes.index(elem_id)
+            stgrm = sg.generate_spectrogram(join(test_dir, element))
+            test_set.extend(_make_array(stgrm, index))
+
+    train_min_nr = min([len(x[0]) for x in train_set])
+    test_min_nr  = min([len(x[0]) for x in test_set])
+
+    train_data = [x[:train_min_nr] for x in train_set]
+    test_data  = [x[:test_min_nr] for x in test_set]
+
+    return numpy.random.permutation(train_data), test_data, classes
 
 
-def _make_array(xy):
-    data_x, data_y = xy
+def _make_array(x, y):
     return zip(
-        numpy.asarray(data_x, dtype=theano.config.floatX),
-        numpy.asarray(data_y, dtype='int32'))
+        numpy.asarray(x, dtype=theano.config.floatX),
+        numpy.asarray([y]*len(x), dtype='int32'))
 
 
 
-def main(dataset='mnist.pkl.gz'):
-    train_examples, dev_examples, test_examples = load_data(dataset)
+def main(train_dir='train', test_dir='test'):
+
+    print '... loading data'        
+    train_set, test_set, classes = load_data(train_dir, test_dir)
+    
     print '... building the model'
+    n = nn.Net(len(classes))
+    
+    n.load()
+    # n.save('meoo.txt')
+    error = numpy.mean([n.evaluate_model(x[0], x[1]) for x in test_set])
+    print('epoch %i, validation error %f %%' % (0, error * 100))
+    exit(1)
 
-    n = nn.Net(10)						# Creating a neural network with 10 classes as output(digits from 0 to 9)
-    n.add_hidden_layer(28**2, 500)		# Adding a hidden layer which input length is 28**2 and output length is 500
-    n.compile_model()					# Generating the network's training and evaluating model
+    # n.add_hidden_layer(601, 300)
+    # n.add_hidden_layer(300, 150)
+    # n.add_hidden_layer(150,  75)
+    # n.add_hidden_layer( 75,  25)
 
+    print '... compiling the model'
+    n.compile_model()
+    
+    current_error = 1
+    error         = 1
     # We train the network 100 times
     # Each time we evaluate the results and write out the error percentage
-    for epoch in range(1, 101):
-        print '... training'
+    for epoch in range(1, 5):
 
-        for x, y in train_examples:
-            n.train_model(x, y)
-            
+        if error < current_error:
+            f = open('error.txt','a')
+            f.write('{}'.format(error))
+            f.write('\n')
+            f.close()
+            current_error = error
+            n.save()
+
+        # print '... training'            
+        for x in train_set:
+            n.train_model(x[0], x[1])
+
+        print '... calculating error'            
         # compute zero-one loss on validation set
-        error = numpy.mean([n.evaluate_model(x, y) for x, y in dev_examples])
+        error = numpy.mean([n.evaluate_model(x[0], x[1]) for x in test_set])
         print('epoch %i, validation error %f %%' % (epoch, error * 100))
-
 
 
 if __name__ == '__main__':
