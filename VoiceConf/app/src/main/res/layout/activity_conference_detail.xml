@@ -90,7 +90,7 @@
                 android:drawablePadding="@dimen/large_padding"
                 android:gravity="center"
                 android:paddingTop="@dimen/extra_large_padding"
-                android:text="@string/tap_here_n_to_add_invited_users"
+                android:text="@string/conference_placeholder_text"
                 android:textSize="@dimen/text_size_title" />
 
             <TextView
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/large_padding"
                 android:gravity="center"
-                android:text="@string/after_adding_invitees_you_can_start_n_the_conference_by_tapping_the_action_button" />
+                android:text="@string/conference_guide_text" />
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
