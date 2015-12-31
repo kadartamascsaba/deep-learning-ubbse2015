@@ -12,7 +12,7 @@ import android.view.ViewStub;
  * <p/>
  * Created by Attila Blenesi on 30 Dec 2015
  */
-public class RecyclerViewWithPlaceholder extends RecyclerView {
+public class PlaceholderRecyclerView extends RecyclerView {
     private View mEmptyView;
     private boolean mFirstStart; //Handles the initial (hidden) state of the drawable.
 
@@ -24,17 +24,17 @@ public class RecyclerViewWithPlaceholder extends RecyclerView {
         }
     };
 
-    public RecyclerViewWithPlaceholder(Context context) {
+    public PlaceholderRecyclerView(Context context) {
         super(context);
         mFirstStart = true;
     }
 
-    public RecyclerViewWithPlaceholder(Context context, AttributeSet attrs) {
+    public PlaceholderRecyclerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mFirstStart = true;
     }
 
-    public RecyclerViewWithPlaceholder(Context context, AttributeSet attrs, int defStyle) {
+    public PlaceholderRecyclerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mFirstStart = true;
     }

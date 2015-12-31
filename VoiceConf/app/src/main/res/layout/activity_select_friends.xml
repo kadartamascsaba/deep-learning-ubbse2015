@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -21,14 +21,47 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_select_friends" />
+    <com.voiceconf.voiceconf.ui.view.PlaceholderRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/select_friends_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/list_item_height"
+        tools:listitem="@layout/item_friend" />
+
+    <LinearLayout
+        android:id="@+id/no_friend_placeholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/large_padding"
+            android:drawableTop="@drawable/placeholder_no_frineds"
+            android:gravity="center"
+            android:text="@string/no_friend_placeholder_text"
+            android:textSize="@dimen/text_size_title" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding"
+            android:gravity="center"
+            android:text="@string/no_friends_guide_text" />
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_done_white_24dp" />
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>

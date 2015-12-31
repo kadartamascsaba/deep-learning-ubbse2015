@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.voiceconf.voiceconf.R;
 import com.voiceconf.voiceconf.storage.models.Friend;
-import com.voiceconf.voiceconf.ui.view.FriendViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,7 +14,7 @@ import com.voiceconf.voiceconf.networking.services.FriendService;
 import com.voiceconf.voiceconf.storage.models.Friend;
 import com.voiceconf.voiceconf.storage.nonpersistent.DataManager;
 import com.voiceconf.voiceconf.storage.nonpersistent.VoiceConfApplication;
-import com.voiceconf.voiceconf.ui.view.RecyclerViewWithPlaceholder;
+import com.voiceconf.voiceconf.ui.view.PlaceholderRecyclerView;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -24,7 +24,7 @@ import java.util.Observer;
  */
 public class FriendsFragment extends Fragment implements Observer {
 
-    private RecyclerViewWithPlaceholder mRecyclerView;
+    private PlaceholderRecyclerView mRecyclerView;
     private FriendRecyclerAdapter mRecyclerAdapter;
     private SwipeRefreshLayout mSwipeContainer;
 
@@ -58,7 +58,7 @@ public class FriendsFragment extends Fragment implements Observer {
                 FriendService.archiveFriend((Friend) v.getTag(), true);
             }
         });
-        mRecyclerView = (RecyclerViewWithPlaceholder) view.findViewById(R.id.friend_recycler);
+        mRecyclerView = (PlaceholderRecyclerView) view.findViewById(R.id.friend_recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mRecyclerAdapter);
         mRecyclerView.setEmptyView(view.findViewById(R.id.friend_placeholder));

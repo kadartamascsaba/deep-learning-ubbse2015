@@ -17,6 +17,7 @@
         android:src="@drawable/placeholder_conference" />
 
     <ImageView
+        android:id="@+id/user_selected"
         android:layout_width="@dimen/min_view_height"
         android:layout_height="@dimen/min_view_height"
         android:layout_centerVertical="true"

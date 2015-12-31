@@ -49,5 +49,7 @@
     <string name="facebook_app_id">1000732483317996</string>
     <string name="log_out">Log out</string>
     <string name="under_development">Under development.</string>
+    <string name="no_friend_placeholder_text">Your friend list is empty 😔</string>
+    <string name="no_friends_guide_text">Yuo can add friends via email on the\n friends tab or the nav. drawer.</string>
 
 </resources>
