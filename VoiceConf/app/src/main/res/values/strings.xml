@@ -20,7 +20,7 @@
     <!--Nav-->
     <string name="search">Search</string>
     <string name="settings">Settings</string>
-    <string name="version">Version 0.1.0.2</string>
+    <string name="version">v0.1.0.2</string>
 
     <!--History-->
     <string name="history_placeholder_text">Your conference\n history will appear here …</string>
@@ -42,8 +42,12 @@
     <string name="conference_guide_text">After adding invitees, you can start\n the conference by tapping the action button!</string>
     <string name="conference_title">Conference title</string>
     <string name="default_conference">Default Conference</string>
+    <!--Select Friends-->
+    <string name="title_activity_select_friends">Select Friends</string>
 
     <!--Facebook login-->
     <string name="facebook_app_id">1000732483317996</string>
+    <string name="log_out">Log out</string>
+    <string name="under_development">Under development.</string>
 
 </resources>

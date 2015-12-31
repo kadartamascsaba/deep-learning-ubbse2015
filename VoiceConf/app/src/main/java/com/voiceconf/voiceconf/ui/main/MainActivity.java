@@ -3,6 +3,7 @@ package com.voiceconf.voiceconf.ui.main;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.parse.ParseUser;
 import com.voiceconf.voiceconf.storage.models.User;
+import com.voiceconf.voiceconf.ui.authentification.LoginActivity;
 import com.voiceconf.voiceconf.ui.conference.setup.ConferenceDetailActivity;
 import com.voiceconf.voiceconf.R;
 
@@ -60,14 +62,37 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         ParseUser currentUser = User.getCurrentUser();
 
+        // Navigation view header setup
         View header = navigationView.getHeaderView(0);
-        CircleImageView avatarView = (CircleImageView) header.findViewById(R.id.user_avatar);
-        TextView emailView = (TextView) header.findViewById(R.id.user_email);
-        TextView nameView = (TextView) header.findViewById(R.id.user_name);
+        // Load user avatar
+        Glide.with(this).load(User.getAvatar(currentUser)).into((CircleImageView) header.findViewById(R.id.user_avatar));
+        // Set name and email
+        ((TextView) header.findViewById(R.id.user_name)).setText(currentUser.getUsername());
+        ((TextView) header.findViewById(R.id.user_email)).setText(currentUser.getEmail());
 
-        Glide.with(this).load(User.getAvatar(currentUser)).into(avatarView);
-        nameView.setText(currentUser.getUsername());
-        emailView.setText(currentUser.getEmail());
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_search:
+                        Snackbar.make(mViewPager, R.string.under_development, Snackbar.LENGTH_LONG).show();
+                        return true;
+                    case R.id.nav_add_friend:
+                        new AddFriendDialog().show(getSupportFragmentManager(), ADD_FRIEND_DIALOG_TAG);
+                        return true;
+                    case R.id.nav_settings:
+                        Snackbar.make(mViewPager, R.string.under_development, Snackbar.LENGTH_LONG).show();
+                        return true;
+                    case R.id.nav_logout:
+                        ParseUser.logOutInBackground();
+                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                        finish();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
 
         // Floating Action Button setup
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab);

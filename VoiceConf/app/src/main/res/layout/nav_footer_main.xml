@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
-    android:orientation="vertical">
+    android:background="@color/colorPrimary">
 
     <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/app_name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:layout_margin="@dimen/large_padding"
         android:drawableLeft="@drawable/ic_start_conference_white_24dp"
         android:drawablePadding="@dimen/content_padding"
@@ -16,18 +15,20 @@
         android:gravity="bottom"
         android:text="@string/app_name"
         android:textColor="@color/icons"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textSize="@dimen/text_size_title" />
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_alignBaseline="@id/app_name_text"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginBottom="@dimen/large_padding"
-        android:drawablePadding="@dimen/content_padding"
+        android:layout_marginEnd="@dimen/large_padding"
+        android:layout_marginRight="@dimen/large_padding"
         android:gravity="bottom"
         android:text="@string/version"
         android:textColor="@color/icons"
         android:textSize="@dimen/text_size_body" />
 
-</LinearLayout>
+</RelativeLayout>

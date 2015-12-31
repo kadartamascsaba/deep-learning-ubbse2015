@@ -143,6 +143,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                                 if (e == null) {
                                                     // Creating user was successful starting the main activity
                                                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                                    finish();
                                                 } else {
                                                     somethingWentWrong();
                                                 }
@@ -161,6 +162,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                                     if (e == null) {
                                         // Existing user logged in successfully starting the main activity
                                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                        finish();
                                     } else {
                                         somethingWentWrong();
                                     }
