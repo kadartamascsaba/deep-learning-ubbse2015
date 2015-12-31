@@ -36,5 +36,9 @@
     <!--Facebook login-->
     <string name="facebook_app_id">1000732483317996</string>
     <string name="title_activity_select_friends">SelectFriendsActivity</string>
+    <string name="tap_here_n_to_add_invited_users">Tap here\n to add invited users!</string>
+    <string name="after_adding_invitees_you_can_start_n_the_conference_by_tapping_the_action_button">After adding invitees, you can start\n the conference by tapping the action button!</string>
+    <string name="conference_title">Conference title</string>
+    <string name="default_conference">Default Conference</string>
 
 </resources>

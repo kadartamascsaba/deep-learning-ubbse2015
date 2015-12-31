@@ -51,18 +51,18 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/fNameLayout"
                 android:paddingBottom="56dp"
-                android:theme="@style/ToolbarInputTheme"
-                android:paddingLeft="@dimen/extra_large_padding"
-                android:paddingStart="@dimen/extra_large_padding"
                 android:paddingEnd="@dimen/large_padding"
-                android:paddingRight="@dimen/large_padding">
+                android:paddingLeft="@dimen/extra_large_padding"
+                android:paddingRight="@dimen/large_padding"
+                android:paddingStart="@dimen/extra_large_padding"
+                android:theme="@style/ToolbarInputTheme">
 
                 <EditText
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Conference title"
-                    android:text="Default Conference"
+                    android:hint="@string/conference_title"
+                    android:text="@string/default_conference"
                     android:textSize="28sp" />
             </android.support.design.widget.TextInputLayout>
 
@@ -85,12 +85,12 @@
                 android:id="@+id/placeholder_add_user"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="@dimen/extra_large_padding"
                 android:layout_marginTop="@dimen/extra_large_padding"
                 android:drawableBottom="@drawable/placeholder_checklist"
                 android:drawablePadding="@dimen/large_padding"
                 android:gravity="center"
-                android:text="Tap here to add\n the first invited user!"
+                android:paddingTop="@dimen/extra_large_padding"
+                android:text="@string/tap_here_n_to_add_invited_users"
                 android:textSize="@dimen/text_size_title" />
 
             <TextView
@@ -98,7 +98,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/large_padding"
                 android:gravity="center"
-                android:text="After adding invites, you can start\n the conference by tapping action button!" />
+                android:text="@string/after_adding_invitees_you_can_start_n_the_conference_by_tapping_the_action_button" />
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
@@ -110,6 +110,7 @@
         android:layout_gravity="center_vertical|start"
         android:layout_margin="@dimen/fab_margin"
         android:src="@drawable/ic_done_white_24dp"
+        android:visibility="gone"
         app:layout_anchor="@+id/conference_detail_container"
         app:layout_anchorGravity="top|end" />
 

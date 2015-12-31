@@ -7,9 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.parse.ParseUser;
 import com.voiceconf.voiceconf.R;
 
+import java.util.List;
+
 public class SelectFriendsActivity extends AppCompatActivity {
+
+    private List<ParseUser> mUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

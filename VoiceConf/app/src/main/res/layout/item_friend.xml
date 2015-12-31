@@ -16,6 +16,19 @@
         android:layout_marginStart="@dimen/large_padding"
         android:src="@drawable/placeholder_conference" />
 
+    <ImageView
+        android:layout_width="@dimen/min_view_height"
+        android:layout_height="@dimen/min_view_height"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="@dimen/content_padding"
+        android:layout_marginLeft="@dimen/large_padding"
+        android:layout_marginRight="@dimen/content_padding"
+        android:layout_marginStart="@dimen/large_padding"
+        android:background="@drawable/bg_selected"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_done_white_24dp"
+        tools:ignore="ContentDescription" />
+
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/user_name"
         android:layout_width="wrap_content"
@@ -84,9 +97,9 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/divider_height"
         android:layout_alignParentBottom="true"
+        android:layout_marginTop="-1dp"
         android:layout_toEndOf="@id/user_avatar"
         android:layout_toRightOf="@id/user_avatar"
-        android:layout_marginTop="-1dp"
         android:background="@color/divider" />
 
 </RelativeLayout>
