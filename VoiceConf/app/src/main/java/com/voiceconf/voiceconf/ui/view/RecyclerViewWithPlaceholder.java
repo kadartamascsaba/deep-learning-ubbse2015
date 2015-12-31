@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewStub;
 
 /**
+ * Simple RecyclerView subclass that supports providing an empty view (which
+ * is displayed when the adapter has no data and hidden otherwise).
+ * <p/>
  * Created by Attila Blenesi on 30 Dec 2015
  */
 public class RecyclerViewWithPlaceholder extends RecyclerView {

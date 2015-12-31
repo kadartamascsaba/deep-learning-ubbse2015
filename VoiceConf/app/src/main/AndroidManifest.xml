@@ -18,28 +18,29 @@
         <meta-data
             android:name="com.parse.CLIENT_KEY"
             android:value="8JaPRDJscBofJSHN9Uxwlv2003RBjpBQIIoMbG27" />
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
         <activity
             android:name=".ui.main.MainActivity"
-            android:screenOrientation="portrait"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.conference.ConferenceDetailActivity"
-            android:screenOrientation="portrait"
+            android:name=".ui.conference.setup.ConferenceDetailActivity"
             android:label="@string/title_conference_detail"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.conference.ConferenceActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_conference"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.authentification.LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".ui.LandingActivity"
             android:theme="@android:style/Theme.NoDisplay">
@@ -49,11 +50,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.facebook.FacebookActivity"
-            android:configChanges=
-                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity
+            android:name=".ui.conference.setup.SelectFriendsActivity"
+            android:label="@string/title_activity_select_friends"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

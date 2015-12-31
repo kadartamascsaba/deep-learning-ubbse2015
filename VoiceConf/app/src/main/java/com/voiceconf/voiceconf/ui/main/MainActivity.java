@@ -20,7 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.parse.ParseUser;
 import com.voiceconf.voiceconf.storage.models.User;
-import com.voiceconf.voiceconf.ui.conference.ConferenceDetailActivity;
+import com.voiceconf.voiceconf.ui.conference.setup.ConferenceDetailActivity;
 import com.voiceconf.voiceconf.R;
 
 import de.hdodenhof.circleimageview.CircleImageView;

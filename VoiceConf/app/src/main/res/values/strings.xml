@@ -35,5 +35,6 @@
 
     <!--Facebook login-->
     <string name="facebook_app_id">1000732483317996</string>
+    <string name="title_activity_select_friends">SelectFriendsActivity</string>
 
 </resources>
