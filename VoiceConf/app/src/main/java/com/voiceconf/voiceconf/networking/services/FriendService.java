@@ -43,6 +43,7 @@ public class FriendService {
         queries.add(fromOther);
 
         ParseQuery<Friend> friendQuery = ParseQuery.or(queries);
+        friendQuery.whereEqualTo(Friend.ARCHIVED, false);
         friendQuery.include(Friend.FRIEND_ID);
         friendQuery.include(Friend.USER_ID);
 
@@ -74,6 +75,13 @@ public class FriendService {
     public static void addNewFriend(@NonNull final Context context, @NonNull String email) {
         if (email.equals(ParseUser.getCurrentUser().getEmail())) {
             Toast.makeText(context, "You cant add yourself as friend", Toast.LENGTH_LONG).show();
+            return;
+        }
+        for (Friend friend : VoiceConfApplication.sDataManager.getFriends()) {
+            if (friend.getFriend().getEmail().equals(email) || friend.getUser().getEmail().equals(email)) {
+                Toast.makeText(context, "You already have a connection.", Toast.LENGTH_LONG).show();
+                return;
+            }
         }
         final Friend friend = new Friend();
         ParseQuery<ParseUser> userQuery = ParseUser.getQuery();
@@ -88,11 +96,35 @@ public class FriendService {
                     friend.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            if (e == null)
+                            if (e == null) {
                                 Toast.makeText(context, "Friend added succesfully", Toast.LENGTH_LONG).show();
+                                getFriends(null);
+                            }
                         }
                     });
                 }
+            }
+        });
+    }
+
+    public static void archiveFriend(@NonNull Friend friend, boolean archive) {
+        Friend object = Friend.createWithoutData(Friend.class, friend.getObjectId());
+        object.setArchived(archive);
+        object.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                getFriends(null);
+            }
+        });
+    }
+
+    public static void acceptFriend(@NonNull Friend friend) {
+        Friend object = Friend.createWithoutData(Friend.class, friend.getObjectId());
+        object.setPending(false);
+        object.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                getFriends(null);
             }
         });
     }

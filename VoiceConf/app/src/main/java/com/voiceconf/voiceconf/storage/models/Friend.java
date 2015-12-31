@@ -16,6 +16,7 @@ public class Friend extends ParseObject{
     public static final String USER_ID = "userId";
     public static final String FRIEND_ID = "friendId";
     public static final String PENDING = "pending";
+    public static final String ARCHIVED = "archived";
     //endregion
 
     //region GETTERS / SETTERS
@@ -41,6 +42,14 @@ public class Friend extends ParseObject{
 
     public void setPending(boolean pending) {
         put(PENDING, pending);
+    }
+
+    public boolean isArchived() {
+        return getBoolean(ARCHIVED);
+    }
+
+    public void setArchived(boolean archived) {
+        put(ARCHIVED, archived);
     }
     //endregion
 }

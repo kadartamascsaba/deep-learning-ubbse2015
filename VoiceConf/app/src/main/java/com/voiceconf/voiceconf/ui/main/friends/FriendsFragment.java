@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 import com.voiceconf.voiceconf.R;
 import com.voiceconf.voiceconf.networking.services.FriendService;
+import com.voiceconf.voiceconf.storage.models.Friend;
 import com.voiceconf.voiceconf.storage.nonpersistent.DataManager;
 import com.voiceconf.voiceconf.storage.nonpersistent.VoiceConfApplication;
 import com.voiceconf.voiceconf.ui.view.RecyclerViewWithPlaceholder;
@@ -42,8 +43,21 @@ public class FriendsFragment extends Fragment implements Observer {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // TODO CR: [BAttila | High] Implement on click listeners. [BAttila]
-        mRecyclerAdapter = new FriendRecyclerAdapter(null, null, null);
+        mRecyclerAdapter = new FriendRecyclerAdapter(null, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Accept
+                mSwipeContainer.setRefreshing(true);
+                FriendService.acceptFriend((Friend) v.getTag());
+            }
+        }, new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Decline
+                mSwipeContainer.setRefreshing(true);
+                FriendService.archiveFriend((Friend) v.getTag(), true);
+            }
+        });
         mRecyclerView = (RecyclerViewWithPlaceholder) view.findViewById(R.id.friend_recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mRecyclerAdapter);
