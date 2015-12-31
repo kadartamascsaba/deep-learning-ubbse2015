@@ -27,6 +27,7 @@
         android:background="@drawable/bg_selected"
         android:scaleType="centerInside"
         android:src="@drawable/ic_done_white_24dp"
+        android:visibility="gone"
         tools:ignore="ContentDescription" />
 
     <android.support.v7.widget.AppCompatTextView

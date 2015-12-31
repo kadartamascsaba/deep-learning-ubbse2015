@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         // Navigation setup
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         ParseUser currentUser = User.getCurrentUser();
 
@@ -75,13 +75,13 @@ public class MainActivity extends AppCompatActivity
             public boolean onNavigationItemSelected(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.nav_search:
-                        Snackbar.make(mViewPager, R.string.under_development, Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(navigationView, R.string.under_development, Snackbar.LENGTH_LONG).show();
                         return true;
                     case R.id.nav_add_friend:
                         new AddFriendDialog().show(getSupportFragmentManager(), ADD_FRIEND_DIALOG_TAG);
                         return true;
                     case R.id.nav_settings:
-                        Snackbar.make(mViewPager, R.string.under_development, Snackbar.LENGTH_LONG).show();
+                        Snackbar.make(navigationView, R.string.under_development, Snackbar.LENGTH_LONG).show();
                         return true;
                     case R.id.nav_logout:
                         ParseUser.logOutInBackground();

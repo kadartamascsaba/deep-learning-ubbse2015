@@ -2,19 +2,13 @@ package com.voiceconf.voiceconf.ui.main.friends;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.parse.ParseUser;
 import com.voiceconf.voiceconf.R;
 import com.voiceconf.voiceconf.storage.models.Friend;
-import com.voiceconf.voiceconf.storage.models.User;
+import com.voiceconf.voiceconf.ui.view.FriendViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,66 +56,5 @@ public class FriendRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public int getItemCount() {
         return mFriends.size();
-    }
-
-    public static class FriendViewHolder extends RecyclerView.ViewHolder {
-        private ImageButton mAccept;
-        private ImageButton mDecline;
-        private TextView mPendingText;
-        private TextView mFriendName;
-        private TextView mEmail;
-
-        public FriendViewHolder(final View itemView) {
-            super(itemView);
-            mFriendName = (TextView) itemView.findViewById(R.id.user_name);
-            mEmail = (TextView) itemView.findViewById(R.id.user_email);
-            mPendingText = (TextView) itemView.findViewById(R.id.pending);
-            mAccept = (ImageButton) itemView.findViewById(R.id.accept);
-            mDecline = (ImageButton) itemView.findViewById(R.id.decline);
-        }
-
-        public void setup(Friend friend) {
-            if (friend != null) {
-                itemView.setTag(friend);
-                mAccept.setTag(friend);
-                mDecline.setTag(friend);
-
-                if(ParseUser.getCurrentUser().getObjectId().equals(friend.getUser().getObjectId())){
-                    setup(friend.getFriend());
-                    if(friend.isPending()){
-                        mPendingText.setVisibility(View.VISIBLE);
-                        mAccept.setVisibility(View.INVISIBLE);
-                        mDecline.setVisibility(View.INVISIBLE);
-                        return;
-                    }
-                }else{
-                    setup(friend.getUser());
-                    if (friend.isPending()){
-                        mPendingText.setVisibility(View.INVISIBLE);
-                        mAccept.setVisibility(View.VISIBLE);
-                        mDecline.setVisibility(View.VISIBLE);
-                        return;
-                    }
-                }
-
-                mPendingText.setVisibility(View.INVISIBLE);
-                mAccept.setVisibility(View.INVISIBLE);
-                mDecline.setVisibility(View.INVISIBLE);
-            }
-        }
-
-        private void setup(ParseUser user) {
-            // Load friend name
-            if (user != null ) {
-                Glide.with(itemView.getContext()).load(User.getAvatar(user)).into((ImageView) itemView.findViewById(R.id.user_avatar));
-                if (!TextUtils.isEmpty(user.getUsername())) {
-                    mFriendName.setText(user.getUsername());
-                }
-                if (!TextUtils.isEmpty(user.getEmail())) {
-                    mEmail.setText(user.getEmail());
-                }
-            }
-
-        }
     }
 }
