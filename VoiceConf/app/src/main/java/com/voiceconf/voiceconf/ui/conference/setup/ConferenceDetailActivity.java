@@ -1,4 +1,4 @@
-package com.voiceconf.voiceconf.ui.conference;
+package com.voiceconf.voiceconf.ui.conference.setup;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
 import com.voiceconf.voiceconf.R;
+import com.voiceconf.voiceconf.ui.conference.ConferenceActivity;
 import com.voiceconf.voiceconf.ui.main.MainActivity;
 
 /**
