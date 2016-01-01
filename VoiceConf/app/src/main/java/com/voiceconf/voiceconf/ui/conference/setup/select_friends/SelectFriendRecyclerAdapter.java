@@ -1,4 +1,4 @@
-package com.voiceconf.voiceconf.ui.conference.setup;
+package com.voiceconf.voiceconf.ui.conference.setup.select_friends;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -20,17 +20,21 @@ import java.util.Map;
  */
 public class SelectFriendRecyclerAdapter extends PlaceholderRecyclerView.Adapter {
 
+    //region VARIABLES
     private View.OnClickListener mOnClickListener;
-
     private List<ParseUser> mUsers;
     private Map<Integer, Boolean> mSelected;
+    //endregion
 
+    //region CONSTRUCTOR
     public SelectFriendRecyclerAdapter(View.OnClickListener onClickListener){
         mOnClickListener = onClickListener;
         mUsers = new ArrayList<>();
         mSelected = new HashMap<>();
     }
+    //endregion
 
+    //region HELPER
     public void update(@NonNull List<ParseUser> users, @NonNull Map<Integer, Boolean> selected){
         mUsers.clear();
         mUsers.addAll(users);
@@ -45,7 +49,9 @@ public class SelectFriendRecyclerAdapter extends PlaceholderRecyclerView.Adapter
         mSelected.putAll(selected);
         notifyDataSetChanged();
     }
+    //endregion
 
+    //region ADAPTER METHODS
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_friend,parent, false);
@@ -62,4 +68,5 @@ public class SelectFriendRecyclerAdapter extends PlaceholderRecyclerView.Adapter
     public int getItemCount() {
         return mUsers.size();
     }
+    //endregion
 }

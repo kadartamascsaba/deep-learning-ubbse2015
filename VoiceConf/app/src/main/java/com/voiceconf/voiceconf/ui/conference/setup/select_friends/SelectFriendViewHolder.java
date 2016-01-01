@@ -1,4 +1,4 @@
-package com.voiceconf.voiceconf.ui.conference.setup;
+package com.voiceconf.voiceconf.ui.conference.setup.select_friends;
 
 import android.view.View;
 import android.widget.ImageView;
