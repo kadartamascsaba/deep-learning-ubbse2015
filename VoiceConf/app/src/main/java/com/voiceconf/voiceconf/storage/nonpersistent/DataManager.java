@@ -1,5 +1,7 @@
 package com.voiceconf.voiceconf.storage.nonpersistent;
 
+import android.support.annotation.NonNull;
+
 import com.parse.ParseUser;
 import com.voiceconf.voiceconf.storage.models.Friend;
 
@@ -21,8 +23,10 @@ public class DataManager extends Observable {
     //endregion
 
     //region GETTER/SETTERS
+
     /**
      * Sets the friend list and notifies the proper observers.
+     *
      * @param friends The list of friend that will be stored.
      */
     public void setFriends(List<Friend> friends) {
@@ -37,47 +41,58 @@ public class DataManager extends Observable {
     //endregion
 
     //region HELPER METHODS
+
     /**
      * Use this method to get only ParseUser friend objects.
      *
      * @return A list of friends as ParseUser
      */
     public List<ParseUser> getUsers() {
-        List<ParseUser> friends = new ArrayList<>();
-        for (Friend friend : mFriends) {
-            if (!friend.isPending()) {
-                if (ParseUser.getCurrentUser().getObjectId().equals(friend.getUser().getObjectId())) {
-                    friends.add(friend.getFriend());
-                } else {
-                    friends.add(friend.getUser());
+        if (mFriends != null) {
+            List<ParseUser> friends = new ArrayList<>();
+
+            for (Friend friend : mFriends) {
+                if (!friend.isPending()) {
+                    if (ParseUser.getCurrentUser().getObjectId().equals(friend.getUser().getObjectId())) {
+                        friends.add(friend.getFriend());
+                    } else {
+                        friends.add(friend.getUser());
+                    }
                 }
             }
+            return friends;
+        } else {
+            return null;
         }
-        return friends;
     }
 
 
     /**
-     * Helper methop to get the user given a list of ids.
+     * Helper method to get the user given a list of ids.
+     *
      * @param stringArrayListExtra The list of user ids needed to be returned.
      * @return List of requested users.
      */
-    public List<ParseUser> getUsers(ArrayList<String> stringArrayListExtra) {
-        List<ParseUser> friends = new ArrayList<>();
-        for (Friend friend : mFriends) {
-            if (!friend.isPending()) {
-                for(String id : stringArrayListExtra){
-                    if(friend.getUser().getObjectId().equals(id)){
-                        friends.add(friend.getUser());
-                    }else {
-                        if(friend.getFriend().getObjectId().equals(id)){
-                            friends.add(friend.getFriend());
+    public List<ParseUser> getUsers(@NonNull ArrayList<String> stringArrayListExtra) {
+        if (mFriends != null) {
+            List<ParseUser> friends = new ArrayList<>();
+            for (Friend friend : mFriends) {
+                if (!friend.isPending()) {
+                    for (String id : stringArrayListExtra) {
+                        if (friend.getUser().getObjectId().equals(id)) {
+                            friends.add(friend.getUser());
+                        } else {
+                            if (friend.getFriend().getObjectId().equals(id)) {
+                                friends.add(friend.getFriend());
+                            }
                         }
                     }
                 }
             }
-        }
-        return friends;
+            return friends;
+        } else {
+            return null;
+        }   
     }
     //endregion
 }
