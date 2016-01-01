@@ -12,6 +12,7 @@ import android.view.MenuItem;
 
 import com.voiceconf.voiceconf.R;
 import com.voiceconf.voiceconf.ui.conference.ConferenceActivity;
+import com.voiceconf.voiceconf.ui.conference.setup.select_friends.SelectFriendsActivity;
 import com.voiceconf.voiceconf.ui.main.MainActivity;
 
 /**
@@ -68,7 +69,7 @@ public class ConferenceDetailActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SelectFriendsActivity.RESULT_CODE && resultCode == RESULT_OK) {
-            
+
         }
         super.onActivityResult(requestCode, resultCode, data);
     }

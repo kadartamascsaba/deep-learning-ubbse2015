@@ -30,7 +30,7 @@ public class BaseFriendViewHolder extends RecyclerView.ViewHolder {
     // endregion
 
     // region HELPER
-    protected void setup(ParseUser user) {
+    public void setup(ParseUser user) {
         itemView.setTag(user);
         // Load friend name
         if (user != null) {
