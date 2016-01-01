@@ -83,8 +83,7 @@ public class MainActivity extends AppCompatActivity
                         new AddFriendDialog().show(getSupportFragmentManager(), ADD_FRIEND_DIALOG_TAG);
                         return true;
                     case R.id.nav_settings:
-                        Snackbar.make(navigationView, R.string.under_development, Snackbar.LENGTH_LONG).show();
-                        return true;
+                        return openSettings();
                     case R.id.nav_logout:
                         return logOut();
                     default:
@@ -147,8 +146,7 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
             case R.id.action_settings:
-                Snackbar.make(mFloatingActionButton, R.string.under_development, Snackbar.LENGTH_LONG).show();
-                return true;
+                openSettings();
             case R.id.action_log_out:
                 logOut();
             default:
@@ -198,6 +196,11 @@ public class MainActivity extends AppCompatActivity
         ParseUser.logOutInBackground();
         startActivity(new Intent(MainActivity.this, LoginActivity.class));
         finish();
+        return true;
+    }
+
+    private boolean openSettings() {
+        startActivity(new Intent(MainActivity.this, SettingsActivity.class));
         return true;
     }
     //endregion

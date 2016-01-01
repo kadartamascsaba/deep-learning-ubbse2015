@@ -51,5 +51,8 @@
 
     <!--Facebook login-->
     <string name="facebook_app_id">1000732483317996</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="hostname_input">Hostname</string>
+    <string name="port_input">Port</string>
 
 </resources>
