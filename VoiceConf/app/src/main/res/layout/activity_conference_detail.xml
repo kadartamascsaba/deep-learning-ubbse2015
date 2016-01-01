@@ -61,6 +61,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/conference_title"
                     android:text="@string/default_conference"
+                    android:selectAllOnFocus="true"
                     android:textSize="28sp" />
             </android.support.design.widget.TextInputLayout>
 
