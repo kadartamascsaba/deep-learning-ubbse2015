@@ -31,7 +31,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * This is the main activity witch greets the user contains a tabbed layout with recent user
  * activity and friend management.
  * <p/>
- * Created by Attila Blenesi 20/12/2015
+ * Created by Attila Blenesi 20 Dec 2015
+ * Edited by Tamas-Csaba Kadar
  */
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
