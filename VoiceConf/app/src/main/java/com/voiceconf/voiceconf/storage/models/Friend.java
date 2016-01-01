@@ -31,7 +31,7 @@ public class Friend extends ParseObject{
     public ParseUser getFriend() {
         return getParseUser(FRIEND_ID);
     }
-    
+
     public void setFriend(String friendId) {
         put(FRIEND_ID, ParseUser.createWithoutData(ParseUser.class, friendId));
     }
