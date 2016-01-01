@@ -32,6 +32,7 @@ public class SelectFriendsActivity extends AppCompatActivity {
     private ArrayMap<Integer, Boolean> mSelected;
 
     private SelectFriendRecyclerAdapter mRecyclerAdapter;
+    private PlaceholderRecyclerView mRecyclerView;
     //endregion
 
     //region LIFE CYCLE METHODS
@@ -96,7 +97,7 @@ public class SelectFriendsActivity extends AppCompatActivity {
             }
         });
 
-        PlaceholderRecyclerView mRecyclerView = (PlaceholderRecyclerView) findViewById(R.id.select_friends_recycler);
+        mRecyclerView = (PlaceholderRecyclerView) findViewById(R.id.select_friends_recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mRecyclerAdapter);
         mRecyclerView.setEmptyView(findViewById(R.id.no_friend_placeholder));
@@ -106,7 +107,12 @@ public class SelectFriendsActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         mUsers = VoiceConfApplication.sDataManager.getUsers();
-        mRecyclerAdapter.update(mUsers, mSelected);
+        if(mUsers.size()>0) {
+            mRecyclerAdapter.update(mUsers, mSelected);
+        }else {
+            mRecyclerView.updateEmptyView(true);
+        }
+
     }
 
     @Override
