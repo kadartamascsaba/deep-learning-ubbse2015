@@ -36,9 +36,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ViewPager.OnPageChangeListener {
 
+    //region VARIABLES
     private static final String ADD_FRIEND_DIALOG_TAG = "add_friend";
     private FloatingActionButton mFloatingActionButton;
     private ViewPager mViewPager;
+    //endregion
 
     //region LIFE CYCLE METHODS
     @Override
@@ -73,7 +75,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.nav_search:
                         Snackbar.make(navigationView, R.string.under_development, Snackbar.LENGTH_LONG).show();
                         return true;
@@ -84,10 +86,7 @@ public class MainActivity extends AppCompatActivity
                         Snackbar.make(navigationView, R.string.under_development, Snackbar.LENGTH_LONG).show();
                         return true;
                     case R.id.nav_logout:
-                        ParseUser.logOutInBackground();
-                        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                        finish();
-                        return true;
+                        return logOut();
                     default:
                         return false;
                 }
@@ -99,7 +98,7 @@ public class MainActivity extends AppCompatActivity
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                switch (mViewPager.getCurrentItem()){
+                switch (mViewPager.getCurrentItem()) {
                     case MainPagerAdapter.HISTORY_TAB:
                         startActivity(new Intent(MainActivity.this, ConferenceDetailActivity.class));
                         break;
@@ -144,14 +143,17 @@ public class MainActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Snackbar.make(mFloatingActionButton, R.string.under_development, Snackbar.LENGTH_LONG).show();
+                return true;
+            case R.id.action_log_out:
+                logOut();
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -173,7 +175,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onPageSelected(int position) {
-        switch (position){
+        switch (position) {
             case MainPagerAdapter.FRIENDS_TAB:
                 mFloatingActionButton.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_person_add_white_24dp));
                 break;
@@ -188,6 +190,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onPageScrollStateChanged(int state) {
 
+    }
+    //endregion
+
+    //region HELPER
+    private boolean logOut() {
+        ParseUser.logOutInBackground();
+        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        finish();
+        return true;
     }
     //endregion
 }

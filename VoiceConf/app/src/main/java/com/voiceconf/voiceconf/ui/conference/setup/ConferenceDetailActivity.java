@@ -27,10 +27,13 @@ import com.voiceconf.voiceconf.ui.view.PlaceholderRecyclerView;
  */
 public class ConferenceDetailActivity extends AppCompatActivity {
 
-    private static final String TAG = "ConferenceDetailActivity";
+    //region VARIABLES
     private IniteesAdapter mIniteesAdapter;
     private PlaceholderRecyclerView mRecyclerView;
+    private FloatingActionButton mFloatingActionButton;
+    //endregion
 
+    //region LIFE CYCLE METHODS
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,8 +50,8 @@ public class ConferenceDetailActivity extends AppCompatActivity {
         }
 
         // Floating Action Button setup
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
+        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // On F.A.B. press the conference will be started.
@@ -85,11 +88,13 @@ public class ConferenceDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "onActivityResult: Started");
         if (requestCode == SelectFriendsActivity.RESULT_CODE && resultCode == RESULT_OK) {
-            Log.d(TAG, "onActivityResult: Res OK Selected userNr" + data.getStringArrayListExtra(SelectFriendsActivity.SELECTED_USER_IDS).size());
             mIniteesAdapter.update(VoiceConfApplication.sDataManager.getUsers(data.getStringArrayListExtra(SelectFriendsActivity.SELECTED_USER_IDS)));
+            mRecyclerView.updateEmptyView(true);
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mFloatingActionButton.setVisibility(View.VISIBLE);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+    //endregion
 }

@@ -68,7 +68,7 @@ public class SelectFriendsActivity extends AppCompatActivity {
                     }
                 }
                 result.putStringArrayListExtra(SELECTED_USER_IDS, friendIds);
-                setResult(RESULT_CODE, result);
+                setResult(RESULT_OK, result);
                 finish();
             }
         });

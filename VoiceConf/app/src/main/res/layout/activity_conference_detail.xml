@@ -1,11 +1,9 @@
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".ui.conference.setup.ConferenceDetailActivity"
-    tools:ignore="MergeRootFrame">
+    tools:context=".ui.conference.setup.ConferenceDetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -70,61 +68,54 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/conference_detail_container"
+    <com.voiceconf.voiceconf.ui.view.PlaceholderRecyclerView
+        android:id="@+id/invitees_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:layout_below="@id/appbar"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/list_item_height"
+        tools:listitem="@layout/item_friend" />
 
-        <FrameLayout
+
+    <LinearLayout
+        android:id="@+id/add_invitees"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/appbar"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/placeholder_add_user"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <com.voiceconf.voiceconf.ui.view.PlaceholderRecyclerView
-                android:id="@+id/invitees_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingBottom="@dimen/list_item_height"
-                tools:listitem="@layout/item_friend" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/extra_large_padding"
+            android:drawableBottom="@drawable/placeholder_checklist"
+            android:drawablePadding="@dimen/large_padding"
+            android:gravity="center"
+            android:paddingTop="@dimen/extra_large_padding"
+            android:text="@string/conference_placeholder_text"
+            android:textSize="@dimen/text_size_title" />
 
-            <LinearLayout
-                android:id="@+id/add_invitees"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/placeholder_add_user"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/extra_large_padding"
-                    android:drawableBottom="@drawable/placeholder_checklist"
-                    android:drawablePadding="@dimen/large_padding"
-                    android:gravity="center"
-                    android:paddingTop="@dimen/extra_large_padding"
-                    android:text="@string/conference_placeholder_text"
-                    android:textSize="@dimen/text_size_title" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/large_padding"
-                    android:gravity="center"
-                    android:text="@string/conference_guide_text" />
-            </LinearLayout>
-        </FrameLayout>
-
-    </android.support.v4.widget.NestedScrollView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/large_padding"
+            android:gravity="center"
+            android:text="@string/conference_guide_text" />
+    </LinearLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|start"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/appbar"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"
+        android:layout_marginTop="-48dp"
         android:src="@drawable/ic_done_white_24dp"
-        android:visibility="gone"
-        app:layout_anchor="@+id/conference_detail_container"
-        app:layout_anchorGravity="top|end" />
+        android:visibility="gone" />
 
-</android.support.design.widget.CoordinatorLayout>
+</RelativeLayout>
