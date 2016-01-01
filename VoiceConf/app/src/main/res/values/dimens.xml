@@ -5,10 +5,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-
     <dimen name="min_view_height">48dp</dimen>
     <dimen name="divider_height">1dp</dimen>
-
 
     <!-- Text sizes -->
     <dimen name="text_size_small">10sp</dimen>
@@ -22,6 +20,8 @@
     <dimen name="content_padding">8dp</dimen>
     <dimen name="large_padding">16dp</dimen>
     <dimen name="extra_large_padding">24dp</dimen>
+
+    <!-- List item -->
     <dimen name="list_item_height">80dp</dimen>
 
 </resources>
