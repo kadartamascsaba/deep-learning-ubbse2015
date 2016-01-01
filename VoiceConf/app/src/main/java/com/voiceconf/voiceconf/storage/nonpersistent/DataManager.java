@@ -92,7 +92,7 @@ public class DataManager extends Observable {
             return friends;
         } else {
             return null;
-        }   
+        }
     }
     //endregion
 }
