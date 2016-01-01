@@ -17,13 +17,13 @@ import java.util.List;
 /**
  * Created by Attila Blenesi on 01 Jan 2016
  */
-public class IniteesAdapter extends PlaceholderRecyclerView.Adapter {
+public class InviteesAdapter extends PlaceholderRecyclerView.Adapter {
 
     private View.OnClickListener mOnClickListener;
 
     private List<ParseUser> mUsers;
 
-    public IniteesAdapter(View.OnClickListener onClickListener) {
+    public InviteesAdapter(View.OnClickListener onClickListener) {
         mOnClickListener = onClickListener;
         mUsers = new ArrayList<>();
     }
@@ -33,6 +33,14 @@ public class IniteesAdapter extends PlaceholderRecyclerView.Adapter {
         mUsers.clear();
         mUsers.addAll(users);
         notifyDataSetChanged();
+    }
+
+    public List<String> getItemIds(){
+        List<String> ids = new ArrayList<>();
+        for (ParseUser user : mUsers){
+            ids.add(user.getObjectId());
+        }
+        return ids;
     }
     //endregion
 

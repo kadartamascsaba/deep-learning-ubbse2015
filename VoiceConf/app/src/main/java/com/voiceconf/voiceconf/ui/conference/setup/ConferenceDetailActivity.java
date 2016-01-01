@@ -5,14 +5,15 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 import com.voiceconf.voiceconf.R;
+import com.voiceconf.voiceconf.networking.services.ConferenceService;
 import com.voiceconf.voiceconf.storage.nonpersistent.VoiceConfApplication;
 import com.voiceconf.voiceconf.ui.conference.ConferenceActivity;
 import com.voiceconf.voiceconf.ui.conference.setup.select_friends.SelectFriendsActivity;
@@ -28,7 +29,7 @@ import com.voiceconf.voiceconf.ui.view.PlaceholderRecyclerView;
 public class ConferenceDetailActivity extends AppCompatActivity {
 
     //region VARIABLES
-    private IniteesAdapter mIniteesAdapter;
+    private InviteesAdapter mInviteesAdapter;
     private PlaceholderRecyclerView mRecyclerView;
     private FloatingActionButton mFloatingActionButton;
     //endregion
@@ -49,12 +50,15 @@ public class ConferenceDetailActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        final EditText editTitle = (EditText) findViewById(R.id.conference_title);
         // Floating Action Button setup
         mFloatingActionButton = (FloatingActionButton) findViewById(R.id.fab);
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // On F.A.B. press the conference will be started.
+                // On F.A.B. press the conference will be saved then started.
+                mFloatingActionButton.setEnabled(false);
+                ConferenceService.saveConferenceWithInvites(getApplicationContext(), editTitle.getText().toString(), mInviteesAdapter.getItemIds());
                 startActivity(new Intent(ConferenceDetailActivity.this, ConferenceActivity.class));
             }
         });
@@ -69,10 +73,10 @@ public class ConferenceDetailActivity extends AppCompatActivity {
         });
 
         // Recycler view setup
-        mIniteesAdapter = new IniteesAdapter(null);
+        mInviteesAdapter = new InviteesAdapter(null);
         mRecyclerView = (PlaceholderRecyclerView) findViewById(R.id.invitees_recycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(mIniteesAdapter);
+        mRecyclerView.setAdapter(mInviteesAdapter);
         mRecyclerView.setEmptyView(placeholder);
     }
 
@@ -89,7 +93,7 @@ public class ConferenceDetailActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SelectFriendsActivity.RESULT_CODE && resultCode == RESULT_OK) {
-            mIniteesAdapter.update(VoiceConfApplication.sDataManager.getUsers(data.getStringArrayListExtra(SelectFriendsActivity.SELECTED_USER_IDS)));
+            mInviteesAdapter.update(VoiceConfApplication.sDataManager.getUsers(data.getStringArrayListExtra(SelectFriendsActivity.SELECTED_USER_IDS)));
             mRecyclerView.updateEmptyView(true);
             mRecyclerView.setVisibility(View.VISIBLE);
             mFloatingActionButton.setVisibility(View.VISIBLE);

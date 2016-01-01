@@ -11,7 +11,7 @@ import com.parse.ParseUser;
 public class Invite extends ParseObject{
 
     //region CONSTANTS
-    private static final String CONFERENCE = "ownerId";
+    private static final String CONFERENCE = "conference";
     private static final String ACCEPTED = "accepted";
     private static final String INVITED = "invited";
     //endregion

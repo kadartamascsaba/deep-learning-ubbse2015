@@ -49,11 +49,11 @@ public class Conference extends ParseObject{
     }
 
 
-    public void putInvitees(List<Invite> invites){
+    public void putInvites(List<Invite> invites){
         put(INVITEES, invites);
     }
 
-//    public void putInvitees(List<String> inviteeIds){
+//    public void putInvites(List<String> inviteeIds){
 //        List<Invite> invites = new ArrayList<>();
 //        for (String id : inviteeIds){
 //            invites.add(Invite.createWithoutData(Invite.class, id));
@@ -61,5 +61,4 @@ public class Conference extends ParseObject{
 //        put(INVITEES, invites);
 //    }
     //endregion
-
 }
