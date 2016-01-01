@@ -112,7 +112,6 @@ public class SelectFriendsActivity extends AppCompatActivity {
         }else {
             mRecyclerView.updateEmptyView(true);
         }
-
     }
 
     @Override

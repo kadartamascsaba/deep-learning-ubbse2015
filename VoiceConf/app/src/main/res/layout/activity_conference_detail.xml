@@ -79,6 +79,13 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+            <com.voiceconf.voiceconf.ui.view.PlaceholderRecyclerView
+                android:id="@+id/invitees_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingBottom="@dimen/list_item_height"
+                tools:listitem="@layout/item_friend" />
 
             <LinearLayout
                 android:id="@+id/add_invitees"
@@ -105,14 +112,6 @@
                     android:gravity="center"
                     android:text="@string/conference_guide_text" />
             </LinearLayout>
-
-            <com.voiceconf.voiceconf.ui.view.PlaceholderRecyclerView
-                android:id="@+id/invitees_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingBottom="@dimen/list_item_height"
-                tools:listitem="@layout/item_friend" />
         </FrameLayout>
 
     </android.support.v4.widget.NestedScrollView>

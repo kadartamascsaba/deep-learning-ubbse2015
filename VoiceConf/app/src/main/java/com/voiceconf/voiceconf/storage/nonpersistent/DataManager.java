@@ -14,14 +14,29 @@ import java.util.Observable;
  */
 public class DataManager extends Observable {
 
+    //region VARIABLES
     public static final int FRIENDS_UPDATED = 1; // Data type for observer notification
 
     private List<Friend> mFriends;
+    //endregion
+
+    //region GETTER/SETTERS
+    /**
+     * Sets the friend list and notifies the proper observers.
+     * @param friends The list of friend that will be stored.
+     */
+    public void setFriends(List<Friend> friends) {
+        this.mFriends = friends;
+        setChanged();
+        notifyObservers(FRIENDS_UPDATED);
+    }
 
     public List<Friend> getFriends() {
         return mFriends;
     }
+    //endregion
 
+    //region HELPER METHODS
     /**
      * Use this method to get only ParseUser friend objects.
      *
@@ -41,9 +56,28 @@ public class DataManager extends Observable {
         return friends;
     }
 
-    public void setFriends(List<Friend> friends) {
-        this.mFriends = friends;
-        setChanged();
-        notifyObservers(FRIENDS_UPDATED);
+
+    /**
+     * Helper methop to get the user given a list of ids.
+     * @param stringArrayListExtra The list of user ids needed to be returned.
+     * @return List of requested users.
+     */
+    public List<ParseUser> getUsers(ArrayList<String> stringArrayListExtra) {
+        List<ParseUser> friends = new ArrayList<>();
+        for (Friend friend : mFriends) {
+            if (!friend.isPending()) {
+                for(String id : stringArrayListExtra){
+                    if(friend.getUser().getObjectId().equals(id)){
+                        friends.add(friend.getUser());
+                    }else {
+                        if(friend.getFriend().getObjectId().equals(id)){
+                            friends.add(friend.getFriend());
+                        }
+                    }
+                }
+            }
+        }
+        return friends;
     }
+    //endregion
 }
