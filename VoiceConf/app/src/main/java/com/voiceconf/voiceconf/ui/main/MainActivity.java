@@ -146,9 +146,9 @@ public class MainActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         switch (item.getItemId()) {
             case R.id.action_settings:
-                openSettings();
+                return openSettings();
             case R.id.action_log_out:
-                logOut();
+                return logOut();
             default:
                 return super.onOptionsItemSelected(item);
         }
