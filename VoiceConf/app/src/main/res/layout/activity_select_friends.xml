@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     tools:context="com.voiceconf.voiceconf.ui.conference.setup.SelectFriendsActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/toolbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -21,10 +21,11 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <com.voiceconf.voiceconf.ui.view.PlaceholderRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.voiceconf.voiceconf.ui.view.PlaceholderRecyclerView
         android:id="@+id/select_friends_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_layout"
         android:clipToPadding="false"
         android:paddingBottom="@dimen/list_item_height"
         tools:listitem="@layout/item_friend" />
@@ -41,7 +42,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/large_padding"
-            android:drawableTop="@drawable/placeholder_no_frineds"
+            android:drawableTop="@drawable/placeholder_no_friends"
             android:gravity="center"
             android:text="@string/no_friend_placeholder_text"
             android:textSize="@dimen/text_size_title" />
@@ -62,6 +63,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_done_white_24dp" />
+        android:src="@drawable/ic_done_white_24dp"
+        android:visibility="gone" />
 
 </RelativeLayout>

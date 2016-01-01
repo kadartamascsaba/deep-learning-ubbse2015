@@ -20,6 +20,8 @@
     <!--Nav-->
     <string name="search">Search</string>
     <string name="settings">Settings</string>
+    <string name="log_out">Log out</string>
+    <string name="under_development">Under development.</string>
     <string name="version">v0.1.0.2</string>
 
     <!--History-->
@@ -44,12 +46,10 @@
     <string name="default_conference">Default Conference</string>
     <!--Select Friends-->
     <string name="title_activity_select_friends">Select Friends</string>
+    <string name="no_friend_placeholder_text">Your friend list is empty.</string>
+    <string name="no_friends_guide_text">You can add friends via email on the\n friends tab or the nav. drawer.</string>
 
     <!--Facebook login-->
     <string name="facebook_app_id">1000732483317996</string>
-    <string name="log_out">Log out</string>
-    <string name="under_development">Under development.</string>
-    <string name="no_friend_placeholder_text">Your friend list is empty 😔</string>
-    <string name="no_friends_guide_text">Yuo can add friends via email on the\n friends tab or the nav. drawer.</string>
 
 </resources>

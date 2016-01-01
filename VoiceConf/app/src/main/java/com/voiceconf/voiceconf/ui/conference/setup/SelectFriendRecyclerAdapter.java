@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.parse.ParseUser;
 import com.voiceconf.voiceconf.R;
-import com.voiceconf.voiceconf.storage.models.User;
 import com.voiceconf.voiceconf.ui.view.PlaceholderRecyclerView;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ public class SelectFriendRecyclerAdapter extends PlaceholderRecyclerView.Adapter
 
     private View.OnClickListener mOnClickListener;
 
-    private List<User> mUsers;
+    private List<ParseUser> mUsers;
     private Map<Integer, Boolean> mSelected;
 
     public SelectFriendRecyclerAdapter(View.OnClickListener onClickListener){
@@ -31,7 +31,7 @@ public class SelectFriendRecyclerAdapter extends PlaceholderRecyclerView.Adapter
         mSelected = new HashMap<>();
     }
 
-    public void update(@NonNull List<User> users, @NonNull Map<Integer, Boolean> selected){
+    public void update(@NonNull List<ParseUser> users, @NonNull Map<Integer, Boolean> selected){
         mUsers.clear();
         mUsers.addAll(users);
 

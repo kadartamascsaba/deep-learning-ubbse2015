@@ -17,7 +17,7 @@ import com.voiceconf.voiceconf.ui.main.MainActivity;
 /**
  * This activity provides the interface for the user to complete the necessary information,
  * for starting a conference: Conference title (group title) and invitees.
- *
+ * <p/>
  * Created by Attila Blenesi on 20 Dec 2015
  */
 public class ConferenceDetailActivity extends AppCompatActivity {
@@ -46,6 +46,13 @@ public class ConferenceDetailActivity extends AppCompatActivity {
                 startActivity(new Intent(ConferenceDetailActivity.this, ConferenceActivity.class));
             }
         });
+
+        findViewById(R.id.add_invitees).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivityForResult(new Intent(ConferenceDetailActivity.this, SelectFriendsActivity.class), SelectFriendsActivity.RESULT_CODE);
+            }
+        });
     }
 
     @Override
@@ -56,5 +63,13 @@ public class ConferenceDetailActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == SelectFriendsActivity.RESULT_CODE && resultCode == RESULT_OK) {
+            
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }
