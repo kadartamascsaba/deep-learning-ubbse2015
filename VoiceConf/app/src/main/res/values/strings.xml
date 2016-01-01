@@ -39,6 +39,11 @@
     <string name="cancel">@android:string/cancel</string>
     <string name="email">Email</string>
 
+    <!--Settings-->
+    <string name="hostname_input">Hostname</string>
+    <string name="port_input">Port</string>
+    <string name="save">SAVE</string>
+
     <!--CONFERENCE-->
     <string name="conference_placeholder_text">Tap here\n to add invited users!</string>
     <string name="conference_guide_text">After adding invitees, you can start\n the conference by tapping the action button!</string>
@@ -51,8 +56,6 @@
 
     <!--Facebook login-->
     <string name="facebook_app_id">1000732483317996</string>
-    <string name="title_activity_settings">Settings</string>
-    <string name="hostname_input">Hostname</string>
-    <string name="port_input">Port</string>
+    <string name="server_access">Server access</string>
 
 </resources>

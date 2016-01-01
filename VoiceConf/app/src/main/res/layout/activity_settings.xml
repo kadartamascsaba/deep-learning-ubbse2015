@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/content_padding"
-            android:text="SERVER SETTINGS"
+            android:text="@string/server_access"
             android:textSize="@dimen/text_size_subhead"
             android:textStyle="bold" />
 
@@ -47,6 +47,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hostname_input"
+                android:inputType="textUri"
                 android:minHeight="@dimen/min_view_height"
                 android:textSize="@dimen/text_size_title" />
         </android.support.design.widget.TextInputLayout>
@@ -62,8 +63,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/port_input"
+                android:inputType="number"
                 android:minHeight="@dimen/min_view_height"
-                android:textSize="@dimen/text_size_title" />
+                android:textSize="@dimen/text_size_subhead" />
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
