@@ -40,7 +40,7 @@
     <string name="email">Email</string>
 
     <!--Settings-->
-    <string name="hostname_input">Hostname</string>
+    <string name="ip_address_input">IP address</string>
     <string name="port_input">Port</string>
     <string name="save">SAVE</string>
 

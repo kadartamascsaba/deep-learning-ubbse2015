@@ -46,7 +46,7 @@
                 android:id="@+id/set_hostname_input"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hostname_input"
+                android:hint="@string/ip_address_input"
                 android:inputType="textUri"
                 android:minHeight="@dimen/min_view_height"
                 android:textSize="@dimen/text_size_title" />
