@@ -32,19 +32,19 @@ class Client(SocketServer.BaseRequestHandler):
 		global clients
 		global client_frame
 		
-		if len(clients) >= 2:
-			data = self.request[0]
-			socket = self.request[1]
 		
-			if not self.message_parser(data):
+		data = self.request[0]
+		socket = self.request[1]
+
+		if not self.message_parser(data):
+			if len(clients) >= 2:
 				index = next(i for i, (t1, t2) in enumerate(clients) if (t1 == self.client_address[0] and t2 == self.client_address[1]))
 				client_frame[index].append(data)
 				for x in clients:
 					if x[0] != self.client_address[0] or x[1] != self.client_address[1]:
 						socket.sendto(client_frame[index].pop(0), x)
-		
-		else:
-			flush()
+			else:
+				self.flush()
 
 if __name__ == "__main__":
 	HOST, PORT = "93.115.39.196", 6789
