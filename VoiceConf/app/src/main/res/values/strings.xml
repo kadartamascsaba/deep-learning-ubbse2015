@@ -22,7 +22,7 @@
     <string name="settings">Settings</string>
     <string name="log_out">Log out</string>
     <string name="under_development">Under development.</string>
-    <string name="version">v0.1.0.2</string>
+    <string name="version">v0.1.0.3</string>
 
     <!--History-->
     <string name="history_placeholder_text">Your conference\n history will appear here …</string>
@@ -66,5 +66,6 @@
     <string name="voume_off">Voume off</string>
     <string name="owner_and_invitees"><![CDATA[Owner & invitees]]></string>
     <string name="current_speaker">Current speaker</string>
+    <string name="owner">Owner</string>
 
 </resources>
