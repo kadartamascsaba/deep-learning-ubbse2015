@@ -61,7 +61,7 @@ public class ConferenceViewHolder extends RecyclerView.ViewHolder {
             InviteeAdapter inviteeAdapter = new InviteeAdapter(true);
             mFriedRecyclerView.setLayoutManager(new LinearLayoutManager(itemView.getContext(), LinearLayoutManager.HORIZONTAL, false));
             mFriedRecyclerView.setAdapter(inviteeAdapter);
-            inviteeAdapter.update(conference.getAllInvitees());
+            inviteeAdapter.update(conference.getInvitees());
         }
     }
     //endregion

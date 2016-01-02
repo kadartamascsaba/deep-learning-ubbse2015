@@ -48,15 +48,6 @@ public class Conference extends ParseObject{
         return getList(INVITEES);
     }
 
-    public List<Invite> getAllInvitees(){
-        List<Invite> invites = getInvitees();
-        Invite invite = new Invite();
-        invite.setAccepted(true);
-        invite.put(INVITEES, ParseUser.getCurrentUser());
-        invites.add(invite);
-        return invites;
-    }
-
     public void putInvites(List<Invite> invites){
         put(INVITEES, invites);
     }
