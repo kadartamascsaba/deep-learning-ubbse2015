@@ -59,5 +59,6 @@
     <string name="server_access">Server access</string>
     <string name="conference_screen_placeholder_text">The current speak will appear above\n other will be underneath in a grid.</string>
     <string name="jon_snow">Jon Snow</string>
+    <string name="invalid_email">Is not a valid email address</string>
 
 </resources>

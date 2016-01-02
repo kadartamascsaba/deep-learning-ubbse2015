@@ -2,6 +2,7 @@ package com.voiceconf.voiceconf.ui.main;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -12,9 +13,7 @@ import android.widget.EditText;
 
 import com.voiceconf.voiceconf.R;
 import com.voiceconf.voiceconf.storage.nonpersistent.SharedPreferenceManager;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import com.voiceconf.voiceconf.util.Validator;
 
 /**
  * Created by Tamas-Csaba Kadar on 01 Jan 2016
@@ -63,7 +62,7 @@ public class SettingsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_save:
                 // TODO CR: [Tamas  | High] Add saving logic here [BAttila]
-                saveServerData(mHostname.getText().toString(), mPort.getText().toString());
+                saveData(mHostname.getText().toString(), mPort.getText().toString());
                 return true;
             case android.R.id.home:
                 NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
@@ -81,30 +80,13 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    private void saveServerData(String hostname, String port) {
-        if (isIpAddress(hostname)) {
-            int iPort = 0;
-            try {
-                iPort = Integer.parseInt(port);
-            } catch (NumberFormatException e) {
-                // Error
-            }
-            if (iPort < 0 || iPort > 65535) {
-                // Error
-            }
-            else {
-                SharedPreferenceManager.getInstance(this).saveServerData(hostname, port);
-            }
+    private void saveData(String hostname, String port) {
+        if (Validator.isValidIpAddress(hostname) && Validator.isValidPort(port)) {
+            SharedPreferenceManager.getInstance(this).saveServerData(hostname, port);
         }
         else {
-            // Error
+            Snackbar.make(mPort, "Given server data is invalid", Snackbar.LENGTH_LONG).show();
         }
-    }
-
-    public static boolean isIpAddress(String text) {
-        Pattern p = Pattern.compile("^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
-        Matcher m = p.matcher(text);
-        return m.find();
     }
 
 }
