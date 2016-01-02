@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/conference_card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/content_padding"
+    android:layout_marginEnd="@dimen/large_padding"
+    android:layout_marginLeft="@dimen/large_padding"
+    android:layout_marginStart="@dimen/large_padding"
+    android:layout_marginTop="@dimen/content_padding"
+    android:orientation="vertical"
+    app:contentPadding="@dimen/large_padding">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/conference_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:text="Conference Title" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/conference_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_body"
+        tools:text="2016 Jan 01" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/conference_invitees"
+        android:layout_width="match_parent"
+        android:layout_height="98dp"
+        app:layoutManager="LinearLayoutManager"
+        tools:listitem="@layout/item_friend_horizontal_small" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/divider_height"
+        android:background="@color/divider"/>
+</LinearLayout>

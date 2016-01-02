@@ -1,0 +1,25 @@
+<!doctype html>
+<html ng-app="popupApp" lang="en">
+	<head>
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/ngDialog.min.css">
+		<script src="js/angular.js"></script>
+		<script src="js/popupModul.js"></script>
+		<script src="js/loginCtrl.js"></script>
+		<script src="//cdn.jsdelivr.net/satellizer/0.13.1/satellizer.min.js"></script>
+		
+		<title>Asd</title>
+	</head>
+	<body ng-controller="loginCtrl">
+		<div class="row">
+			<div class="col-md-12">
+				<h2>Log in</h2>
+				<div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="true"></div>
+				<button ng-click="authenticate('facebook')">Sign in with Facebook</button>
+				<button ng-click="authenticate('google')">Sign in with Google</button>
+				<button ng-click="authenticate('github')">Sign in with GitHub</button>
+				<button ng-if="isAuthenticated()" <!--ng-click="logout()"-->>log out</button>
+			</div>
+		</div>
+	</body>
+</html>

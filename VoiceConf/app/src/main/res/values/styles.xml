@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="ToolbarInputTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/icons</item>
+        <item name="android:textColorHint">@color/icons</item>
+
+        <item name="colorAccent">@color/icons</item>
+    </style>
+
+</resources>

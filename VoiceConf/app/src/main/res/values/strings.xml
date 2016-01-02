@@ -1,0 +1,71 @@
+<resources>
+    <string name="app_name">VoiceConf</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_conference_detail">Conference Detail</string>
+    <string name="title_activity_conference">Conference</string>
+
+    <!--LOGIN-->
+    <string name="login_call_to_action">smart voice \nconferencing</string>
+    <string name="login_failed">Connection failed :(</string>
+    <string name="something_went_wrong">Something went wrong.</string>
+    <string name="retry">RETRY</string>
+
+    <!--MAIN SCREEN-->
+    <string name="tab_name_history">History</string>
+    <string name="tab_name_friends">Friends</string>
+    <!--Nav-->
+    <string name="search">Search</string>
+    <string name="settings">Settings</string>
+    <string name="log_out">Log out</string>
+    <string name="under_development">Under development.</string>
+    <string name="version">v0.1.0.2</string>
+
+    <!--History-->
+    <string name="history_placeholder_text">Your conference\n history will appear here …</string>
+    <string name="history_guide_text">Start a new conference by tapping\n the action button!</string>
+
+    <!--Friends-->
+    <string name="friends_placeholder_text">Your friends and\n invites will appear here …</string>
+    <string name="friends_guide_text">Add a new friend by tapping\n the action button!</string>
+    <string name="accept_invitation">Accept Invitation</string>
+    <string name="pending">pending</string>
+    <!--Add Friend-->
+    <string name="add_friend">Add friend</string>
+    <string name="add_friend_dialog_text">Enter your registered friends email address.</string>
+    <string name="cancel">@android:string/cancel</string>
+    <string name="email">Email</string>
+    <string name="invalid_email">Is not a valid email address</string>
+
+    <!--Settings-->
+    <string name="server_access">Server access</string>
+    <string name="ip_address_input">IP address</string>
+    <string name="port_input">Port</string>
+    <string name="save">SAVE</string>
+
+    <!--CONFERENCE-->
+    <string name="conference_placeholder_text">Tap here\n to add invited users!</string>
+    <string name="conference_guide_text">After adding invitees, you can start\n the conference by tapping the action button!</string>
+    <string name="conference_title">Conference title</string>
+    <string name="default_conference">Default Conference</string>
+    <!--Select Friends-->
+    <string name="title_activity_select_friends">Select Friends</string>
+    <string name="no_friend_placeholder_text">Your friend list is empty.</string>
+    <string name="no_friends_guide_text">You can add friends via email on the\n friends tab or the nav. drawer.</string>
+    <!--Conference detail-->
+    <string name="conference_screen_placeholder_text">The current speak will appear above\n other will be underneath in a grid.</string>
+    <string name="jon_snow">Jon Snow</string>
+    <string name="invite_more">Invite more</string>
+    <string name="synchronise">Synchronise</string>
+    <string name="leave_conference">Leave conference</string>
+    <string name="voume_off">Voume off</string>
+    <string name="owner_and_invitees"><![CDATA[Owner & invitees]]></string>
+    <string name="current_speaker">Current speaker</string>
+
+    <!--Facebook login-->
+    <string name="facebook_app_id">1000732483317996</string>
+
+</resources>

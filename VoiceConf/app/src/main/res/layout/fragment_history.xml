@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.main.MainActivity">
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/history_swipe_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.voiceconf.voiceconf.ui.view.PlaceholderRecyclerView
+            android:id="@+id/history_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:listitem="@layout/item_conference" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <LinearLayout
+        android:id="@+id/history_placeholder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:drawablePadding="@dimen/large_padding"
+            android:drawableTop="@drawable/placeholder_history"
+            android:gravity="center"
+            android:text="@string/history_placeholder_text"
+            android:textSize="@dimen/text_size_title" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/history_placeholder"
+            android:layout_marginTop="@dimen/large_padding"
+            android:gravity="center"
+            android:text="@string/history_guide_text" />
+    </LinearLayout>
+</RelativeLayout>
