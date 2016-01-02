@@ -93,6 +93,7 @@ public class FriendService {
                     friend.setFriend(parseUser.getObjectId());
                     friend.setUser(User.getCurrentUser().getObjectId());
                     friend.setPending(true);
+                    friend.setArchived(false);
                     friend.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
