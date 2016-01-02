@@ -31,6 +31,9 @@ public class User extends ParseUser {
     }
 
     public static String getAvatar(ParseUser parseUser) {
+        if(parseUser == null){
+            return null;
+        }
         return parseUser.getString(AVATAR);
     }
 

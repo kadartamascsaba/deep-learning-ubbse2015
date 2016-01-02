@@ -3,6 +3,7 @@ package com.voiceconf.voiceconf.ui.conference.setup;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -13,7 +14,9 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.voiceconf.voiceconf.R;
+import com.voiceconf.voiceconf.networking.services.ConferenceCallback;
 import com.voiceconf.voiceconf.networking.services.ConferenceService;
+import com.voiceconf.voiceconf.storage.models.Conference;
 import com.voiceconf.voiceconf.storage.nonpersistent.VoiceConfApplication;
 import com.voiceconf.voiceconf.ui.conference.ConferenceActivity;
 import com.voiceconf.voiceconf.ui.conference.setup.select_friends.SelectFriendsActivity;
@@ -58,8 +61,22 @@ public class ConferenceDetailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // On F.A.B. press the conference will be saved then started.
                 mFloatingActionButton.setEnabled(false);
-                ConferenceService.saveConferenceWithInvites(getApplicationContext(), editTitle.getText().toString(), mInviteesAdapter.getItemIds());
-                startActivity(new Intent(ConferenceDetailActivity.this, ConferenceActivity.class));
+                ConferenceService.saveConferenceWithInvites(new ConferenceCallback() {
+                    @Override
+                    public void onSuccess(String message, Conference conference) {
+                        Snackbar.make(mFloatingActionButton, message, Snackbar.LENGTH_LONG).show();
+                        if(conference != null){
+                            NavUtils.navigateUpTo(ConferenceDetailActivity.this, new Intent(ConferenceDetailActivity.this, MainActivity.class));
+                            startActivity(ConferenceActivity.getStartIntent(ConferenceDetailActivity.this, conference));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Exception e, String message) {
+                        Snackbar.make(mFloatingActionButton, message, Snackbar.LENGTH_LONG).show();
+                        mFloatingActionButton.setEnabled(true);
+                    }
+                }, editTitle.getText().toString(), mInviteesAdapter.getItemIds());
             }
         });
 

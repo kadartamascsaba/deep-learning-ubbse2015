@@ -3,6 +3,7 @@ package com.voiceconf.voiceconf.storage.nonpersistent;
 import android.support.annotation.NonNull;
 
 import com.parse.ParseUser;
+import com.voiceconf.voiceconf.storage.models.Conference;
 import com.voiceconf.voiceconf.storage.models.Friend;
 
 import java.util.ArrayList;
@@ -17,20 +18,22 @@ import java.util.Observable;
 public class DataManager extends Observable {
 
     //region VARIABLES
-    public static final int FRIENDS_UPDATED = 1; // Data type for observer notification
+    // Data types for observer notification
+    public static final int FRIENDS_UPDATED = 1;
+    public static final int CONFERENCE_UPDATED = 2;
 
     private List<Friend> mFriends;
+    private List<Conference> mConferences;
     //endregion
 
     //region GETTER/SETTERS
-
     /**
      * Sets the friend list and notifies the proper observers.
      *
      * @param friends The list of friend that will be stored.
      */
     public void setFriends(List<Friend> friends) {
-        this.mFriends = friends;
+        mFriends = friends;
         setChanged();
         notifyObservers(FRIENDS_UPDATED);
     }
@@ -38,10 +41,24 @@ public class DataManager extends Observable {
     public List<Friend> getFriends() {
         return mFriends;
     }
+
+    /**
+     * Sets the conference list and notifies the proper observers.
+     *
+     * @param conferences The list of friend that will be stored.
+     */
+    public void setConferences(List<Conference> conferences) {
+        mConferences = conferences;
+        setChanged();
+        notifyObservers(CONFERENCE_UPDATED);
+    }
+
+    public List<Conference> getConferences() {
+        return mConferences;
+    }
     //endregion
 
     //region HELPER METHODS
-
     /**
      * Use this method to get only ParseUser friend objects.
      *

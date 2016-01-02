@@ -32,12 +32,4 @@
         android:textSize="@dimen/text_size_title"
         tools:text="Jon Snow" />
 
-    <View
-        android:layout_width="@dimen/divider_height"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="@dimen/content_padding"
-        android:layout_marginStart="@dimen/content_padding"
-        android:background="@color/divider" />
 </RelativeLayout>

@@ -11,9 +11,9 @@ import com.parse.ParseUser;
 public class Invite extends ParseObject{
 
     //region CONSTANTS
-    private static final String CONFERENCE = "conference";
-    private static final String ACCEPTED = "accepted";
-    private static final String INVITED = "invited";
+    public static final String CONFERENCE = "conference";
+    public static final String ACCEPTED = "accepted";
+    public static final String INVITED = "invited";
     //endregion
 
     //region GETTERS/SETTERS
@@ -35,6 +35,10 @@ public class Invite extends ParseObject{
 
     public void setAccepted(boolean accepted){
         put(ACCEPTED, accepted);
+    }
+
+    public String getConferenceId() {
+        return getParseObject(CONFERENCE).getObjectId();
     }
     //endregion
 }

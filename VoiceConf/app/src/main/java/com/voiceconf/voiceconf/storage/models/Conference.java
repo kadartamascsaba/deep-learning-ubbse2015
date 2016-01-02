@@ -13,10 +13,10 @@ import java.util.List;
 public class Conference extends ParseObject{
 
     //region CONSTANTS
-    private static final String OWNER = "owner";
-    private static final String TITLE = "title";
-    private static final String CLOSED = "closed";
-    private static final String INVITEES = "invitees";
+    public static final String OWNER = "owner";
+    public static final String TITLE = "title";
+    public static final String CLOSED = "closed";
+    public static final String INVITEES = "invitees";
     //endregion
 
     //region GETTERS/SETTERS
@@ -48,6 +48,14 @@ public class Conference extends ParseObject{
         return getList(INVITEES);
     }
 
+    public List<Invite> getAllInvitees(){
+        List<Invite> invites = getInvitees();
+        Invite invite = new Invite();
+        invite.setAccepted(true);
+        invite.put(INVITEES, ParseUser.getCurrentUser());
+        invites.add(invite);
+        return invites;
+    }
 
     public void putInvites(List<Invite> invites){
         put(INVITEES, invites);

@@ -9,7 +9,6 @@
     tools:context=".ui.conference.ConferenceActivity"
     tools:showIn="@layout/activity_conference">
 
-
     <android.support.v7.widget.CardView
         android:id="@+id/data"
         android:layout_width="match_parent"
@@ -34,7 +33,9 @@
                 android:text="@string/jon_snow"
                 android:textSize="@dimen/text_size_title" />
         </LinearLayout>
+
     </android.support.v7.widget.CardView>
+
     <android.support.v7.widget.CardView
         android:id="@+id/invited_card"
         android:layout_below="@id/data"
@@ -46,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="124dp"
             app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/item_friend_horisontal" />
+            tools:listitem="@layout/item_friend_horizontal" />
     </android.support.v7.widget.CardView>
 
     <View

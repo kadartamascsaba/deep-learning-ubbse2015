@@ -1,15 +1,18 @@
 package com.voiceconf.voiceconf.networking.services;
 
-import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.voiceconf.voiceconf.storage.models.Conference;
 import com.voiceconf.voiceconf.storage.models.Invite;
+import com.voiceconf.voiceconf.storage.nonpersistent.VoiceConfApplication;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +24,68 @@ public class ConferenceService {
 
     private static final String TAG = "ConferenceService";
 
-    public static void saveConferenceWithInvites(@NonNull final Context context, @NonNull String title, @NonNull final List<String> inviteeIds) {
+    public static void getConferences(@Nullable final ParseGetCallback<Conference> callback) {
+        ParseQuery<Invite> inviteRequest = ParseQuery.getQuery(Invite.class);
+        inviteRequest.whereEqualTo(Invite.INVITED, ParseUser.createWithoutData(ParseUser.class, ParseUser.getCurrentUser().getObjectId()));
+        inviteRequest.include(Invite.CONFERENCE);
+        inviteRequest.findInBackground(new FindCallback<Invite>() {
+            @Override
+            public void done(List<Invite> objects, ParseException e) {
+                Log.d(TAG, "done: " + e);
+                if(e == null) {
+                    List<String> conferenceIds = new ArrayList<>();
+                    for (Invite invite : objects) {
+                        conferenceIds.add(invite.getConferenceId());
+                    }
+
+                    ParseQuery<Conference> otherRequests = ParseQuery.getQuery(Conference.class);
+                    otherRequests.whereContainedIn("objectId", conferenceIds);
+
+                    ParseQuery<Conference> myRequest = ParseQuery.getQuery(Conference.class);
+                    myRequest.whereEqualTo(Conference.OWNER, ParseUser.createWithoutData(ParseUser.class, ParseUser.getCurrentUser().getObjectId()));
+
+                    List<ParseQuery<Conference>> queries = new ArrayList<>();
+                    queries.add(otherRequests);
+                    queries.add(myRequest);
+
+                    ParseQuery<Conference> conferenceParseQuery = ParseQuery.or(queries);
+                    conferenceParseQuery.include(Conference.OWNER);
+                    conferenceParseQuery.include(Conference.INVITEES);
+                    conferenceParseQuery.orderByDescending("createdAt");
+                    conferenceParseQuery.findInBackground(new FindCallback<Conference>() {
+                        @Override
+                        public void done(List<Conference> objects, ParseException e) {
+                            Log.d(TAG, "done: " + e);
+                            if (e == null) {
+                                if (callback == null) {
+                                    VoiceConfApplication.sDataManager.setConferences(objects);
+                                } else {
+                                    callback.onResult(objects);
+                                }
+                            } else {
+                                if (callback != null) {
+                                    callback.onFailure(e);
+                                }
+                            }
+                        }
+                    });
+                }else{
+                    if(callback != null) {
+                        callback.onFailure(e);
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * Use this method to create a Conference.
+     *
+     * @param callback   The callback to notify the user.
+     * @param title      The Conference title.
+     * @param inviteeIds The list of invited users.
+     */
+    public static void saveConferenceWithInvites(@NonNull final ConferenceCallback callback, @NonNull String title, @NonNull final List<String> inviteeIds) {
         final List<Invite> invites = new ArrayList<>();
         final Conference conference = new Conference();
         conference.setOwner();
@@ -45,15 +109,15 @@ public class ConferenceService {
                             if (e == null) {
                                 conference.putInvites(invites);
                                 conference.saveInBackground();
-                                Toast.makeText(context, "Invitees where notified successfully.", Toast.LENGTH_LONG).show();
+                                callback.onSuccess("Invitees where notified successfully.", conference);
                             } else {
-                                Toast.makeText(context, "Something went wrong while sending invites.", Toast.LENGTH_LONG).show();
+                                callback.onFailure(e, "Something went wrong while sending invites.");
                             }
                         }
                     });
-                    Toast.makeText(context, "Conference created successfully.", Toast.LENGTH_LONG).show();
+                    callback.onSuccess("Conference created successfully.", null);
                 } else {
-                    Toast.makeText(context, "Something went wrong while creating the conference.", Toast.LENGTH_LONG).show();
+                    callback.onFailure(e, "Something went wrong while creating the conference.");
                 }
             }
         });
