@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.parse.ParseException;
 import com.voiceconf.voiceconf.R;
 import com.voiceconf.voiceconf.storage.models.Invite;
 import com.voiceconf.voiceconf.storage.models.User;
@@ -26,6 +27,14 @@ public class FriendHorizontalViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setup(Invite invite) {
+        try {
+            invite.getInvited().fetch();
+            invite.getInvited().fetchIfNeeded();
+        } catch (ParseException e) {
+            // Workaround for some devices
+            e.printStackTrace();
+        }
+
         itemView.setTag(invite);
         if(invite!=null){
             Glide.with(itemView.getContext()).load(User.getAvatar(invite.getInvited())).into((ImageView) itemView.findViewById(R.id.user_avatar));
