@@ -29,10 +29,9 @@ public class SharedPreferenceManager {
 
     public void saveServerData(String ip, String port) {
         SharedPreferences.Editor editor = this.mSharedPrefs.edit();
-
         editor.putString(KEY_IP, ip);
+        editor.commit();
         editor.putString(KEY_PORT, port);
-
         editor.commit();
     }
 

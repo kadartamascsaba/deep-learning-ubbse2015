@@ -15,7 +15,7 @@ public class Validator {
     }
 
     public static boolean isValidPort(String text) {
-        int port = 0;
+        int port;
         try {
             port = Integer.parseInt(text);
         } catch (NumberFormatException e) {
@@ -33,6 +33,5 @@ public class Validator {
         Matcher m = p.matcher(text);
         return m.matches();
     }
-
 
 }
