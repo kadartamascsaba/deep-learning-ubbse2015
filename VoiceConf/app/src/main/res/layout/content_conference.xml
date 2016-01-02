@@ -4,31 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/com_facebook_button_background_color_disabled"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.conference.ConferenceActivity"
     tools:showIn="@layout/activity_conference">
 
-    <TextView
-        android:id="@+id/history_placeholder"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:drawablePadding="@dimen/large_padding"
-        android:drawableTop="@drawable/placeholder_conference"
-        android:gravity="center"
-        android:text="Jon Snow"
-        android:textSize="@dimen/text_size_title" />
 
-    <TextView
-        android:layout_below="@id/history_placeholder"
+    <android.support.v7.widget.CardView
+        android:id="@+id/data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/large_padding"
-        android:gravity="center"
-        android:text="The current speak will appear above\n other will be underneath in a grid." />
+        app:contentPadding="@dimen/large_padding">
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/history_placeholder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:drawablePadding="@dimen/large_padding"
+                android:drawableTop="@drawable/placeholder_conference"
+                android:gravity="center"
+                android:text="@string/jon_snow"
+                android:textSize="@dimen/text_size_title" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+    <android.support.v7.widget.CardView
+        android:id="@+id/invited_card"
+        android:layout_below="@id/data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_padding">
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="124dp"
+            app:layoutManager="LinearLayoutManager"
+            tools:listitem="@layout/item_friend_horisontal" />
+    </android.support.v7.widget.CardView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorAccent" />
 </RelativeLayout>

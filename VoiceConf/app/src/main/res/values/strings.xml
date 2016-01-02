@@ -57,5 +57,7 @@
     <!--Facebook login-->
     <string name="facebook_app_id">1000732483317996</string>
     <string name="server_access">Server access</string>
+    <string name="conference_screen_placeholder_text">The current speak will appear above\n other will be underneath in a grid.</string>
+    <string name="jon_snow">Jon Snow</string>
 
 </resources>
