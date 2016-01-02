@@ -1,8 +1,6 @@
 package com.voiceconf.voiceconf.ui.main;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
@@ -13,6 +11,10 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.voiceconf.voiceconf.R;
+import com.voiceconf.voiceconf.storage.nonpersistent.SharedPreferenceManager;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Tamas-Csaba Kadar on 01 Jan 2016
@@ -22,8 +24,6 @@ public class SettingsActivity extends AppCompatActivity {
 
     private EditText mHostname;
     private EditText mPort;
-
-    private SharedPreferences sharedpreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,19 +74,37 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void initServerData() {
-        sharedpreferences = getSharedPreferences("VoiceConfData", Context.MODE_PRIVATE);
-        mHostname.setText(sharedpreferences.getString("hostname", ""));
-        Integer port = sharedpreferences.getInt("port", 0);
-        if (!port.equals(0)) {
-            mPort.setText(port.toString());
+        mHostname.setText(SharedPreferenceManager.getInstance(this).getSavedIpAddress());
+        String port = SharedPreferenceManager.getInstance(this).getSavedPort();
+        if (!port.equals("")) {
+            mPort.setText(port);
         }
     }
 
     private void saveServerData(String hostname, String port) {
-        SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putString("hostname", hostname);
-        editor.putInt("port", Integer.parseInt(port));
-        editor.commit();
+        if (isIpAddress(hostname)) {
+            int iPort = 0;
+            try {
+                iPort = Integer.parseInt(port);
+            } catch (NumberFormatException e) {
+                // Error
+            }
+            if (iPort < 0 || iPort > 65535) {
+                // Error
+            }
+            else {
+                SharedPreferenceManager.getInstance(this).saveServerData(hostname, port);
+            }
+        }
+        else {
+            // Error
+        }
+    }
+
+    public static boolean isIpAddress(String text) {
+        Pattern p = Pattern.compile("^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
+        Matcher m = p.matcher(text);
+        return m.find();
     }
 
 }
