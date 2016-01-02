@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created by Tamas-Csaba Kadar on 02 Jan 2016.
+ * Edited by Attila Blenesi
  */
 public class Validator {
 
@@ -15,16 +16,13 @@ public class Validator {
     }
 
     public static boolean isValidPort(String text) {
-        int port = 0;
+        int port;
         try {
             port = Integer.parseInt(text);
         } catch (NumberFormatException e) {
             return false;
         }
-        if (port < 0 || port > 65535) {
-            return false;
-        }
-        return true;
+        return !(port < 0 || port > 65535);
     }
 
     public static boolean isValidEmail(String text) {

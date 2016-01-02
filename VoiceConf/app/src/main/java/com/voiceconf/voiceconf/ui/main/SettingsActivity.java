@@ -36,7 +36,11 @@ public class SettingsActivity extends AppCompatActivity {
         mHostname = (EditText)findViewById(R.id.set_hostname_input);
         mPort = (EditText)findViewById(R.id.set_port_input);
 
-        initServerData();
+        mHostname.setText(SharedPreferenceManager.getInstance(this).getSavedIpAddress());
+        String port = SharedPreferenceManager.getInstance(this).getSavedPort();
+        if (!port.equals("")) {
+            mPort.setText(port);
+        }
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
@@ -61,8 +65,14 @@ public class SettingsActivity extends AppCompatActivity {
 
         switch (item.getItemId()) {
             case R.id.action_save:
-                // TODO CR: [Tamas  | High] Add saving logic here [BAttila]
-                saveData(mHostname.getText().toString(), mPort.getText().toString());
+                String hostname = mHostname.getText().toString();
+                String port = mPort.getText().toString();
+                if (Validator.isValidIpAddress(hostname) && Validator.isValidPort(port)) {
+                    SharedPreferenceManager.getInstance(this).saveServerData(hostname, port);
+                }
+                else {
+                    Snackbar.make(mPort, "Given server data is invalid", Snackbar.LENGTH_LONG).show();
+                }
                 return true;
             case android.R.id.home:
                 NavUtils.navigateUpTo(this, new Intent(this, MainActivity.class));
@@ -71,22 +81,4 @@ public class SettingsActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-    private void initServerData() {
-        mHostname.setText(SharedPreferenceManager.getInstance(this).getSavedIpAddress());
-        String port = SharedPreferenceManager.getInstance(this).getSavedPort();
-        if (!port.equals("")) {
-            mPort.setText(port);
-        }
-    }
-
-    private void saveData(String hostname, String port) {
-        if (Validator.isValidIpAddress(hostname) && Validator.isValidPort(port)) {
-            SharedPreferenceManager.getInstance(this).saveServerData(hostname, port);
-        }
-        else {
-            Snackbar.make(mPort, "Given server data is invalid", Snackbar.LENGTH_LONG).show();
-        }
-    }
-
 }
