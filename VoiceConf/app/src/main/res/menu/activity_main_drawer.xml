@@ -16,7 +16,7 @@
             android:title="@string/settings" />
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_power_settings_new_black_24dp"
+            android:icon="@drawable/ic_power_black_24dp"
             android:title="@string/log_out" />
     </group>
 

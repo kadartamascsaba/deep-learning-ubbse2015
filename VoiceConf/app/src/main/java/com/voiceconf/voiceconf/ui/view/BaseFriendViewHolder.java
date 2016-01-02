@@ -34,7 +34,9 @@ public class BaseFriendViewHolder extends RecyclerView.ViewHolder {
         itemView.setTag(user);
         // Load friend name
         if (user != null) {
-            Glide.with(itemView.getContext()).load(User.getAvatar(user)).into((ImageView) itemView.findViewById(R.id.user_avatar));
+            if(itemView.findViewById(R.id.user_avatar)!=null) {
+                Glide.with(itemView.getContext()).load(User.getAvatar(user)).into((ImageView) itemView.findViewById(R.id.user_avatar));
+            }
             if (!TextUtils.isEmpty(user.getUsername())) {
                 mFriendName.setText(user.getUsername());
             }

@@ -28,7 +28,6 @@ public class FriendHorizontalViewHolder extends RecyclerView.ViewHolder {
 
     public void setup(Invite invite) {
         try {
-            invite.getInvited().fetch();
             invite.getInvited().fetchIfNeeded();
         } catch (ParseException e) {
             // Workaround for some devices
@@ -36,7 +35,7 @@ public class FriendHorizontalViewHolder extends RecyclerView.ViewHolder {
         }
 
         itemView.setTag(invite);
-        if(invite!=null){
+        if(invite != null){
             Glide.with(itemView.getContext()).load(User.getAvatar(invite.getInvited())).into((ImageView) itemView.findViewById(R.id.user_avatar));
             if (invite.getInvited()!= null && !TextUtils.isEmpty(invite.getInvited().getUsername())) {
                 mName.setText(invite.getInvited().getUsername());

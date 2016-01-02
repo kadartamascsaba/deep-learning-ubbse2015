@@ -60,5 +60,11 @@
     <string name="conference_screen_placeholder_text">The current speak will appear above\n other will be underneath in a grid.</string>
     <string name="jon_snow">Jon Snow</string>
     <string name="invalid_email">Is not a valid email address</string>
+    <string name="invite_more">Invite more</string>
+    <string name="synchronise">Synchronise</string>
+    <string name="leave_conference">Leave conference</string>
+    <string name="voume_off">Voume off</string>
+    <string name="owner_and_invitees"><![CDATA[Owner & invitees]]></string>
+    <string name="current_speaker">Current speaker</string>
 
 </resources>
