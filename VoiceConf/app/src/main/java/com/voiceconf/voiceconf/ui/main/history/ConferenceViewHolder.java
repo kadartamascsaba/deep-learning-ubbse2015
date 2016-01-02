@@ -5,8 +5,8 @@
  */
 package com.voiceconf.voiceconf.ui.main.history;
 
+import android.annotation.SuppressLint;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -26,7 +26,6 @@ import java.util.Locale;
 public class ConferenceViewHolder extends RecyclerView.ViewHolder {
 
     //region VARIABLES
-    private CardView mCard;
     private TextView mTitle;
     private TextView mDate;
     private RecyclerView mFriedRecyclerView;
@@ -35,7 +34,6 @@ public class ConferenceViewHolder extends RecyclerView.ViewHolder {
     //region CONSTRUCTOR
     public ConferenceViewHolder(View itemView) {
         super(itemView);
-        mCard = (CardView) itemView.findViewById(R.id.conference_card);
         mTitle = (TextView) itemView.findViewById(R.id.conference_title);
         mDate = (TextView) itemView.findViewById(R.id.conference_date);
         mFriedRecyclerView = (RecyclerView) itemView.findViewById(R.id.conference_invitees);
@@ -43,20 +41,21 @@ public class ConferenceViewHolder extends RecyclerView.ViewHolder {
     //endregion
 
     //region HELPER
+    @SuppressLint("SetTextI18n")
     public void setup(Conference conference) {
         itemView.setTag(conference);
         //Load conference data
         if (conference != null) {
             if (!TextUtils.isEmpty(conference.getTitle())) {
-                mTitle.setText(conference.getTitle());
+                mTitle.setText(conference.getTitle() + (!conference.isClosed() ? " LIVE" : ""));
             }
             if (conference.getCreatedAt() != null){
                 mDate.setText(new SimpleDateFormat("dd/MMM/yyyy", Locale.getDefault()).format(conference.getCreatedAt()));
             }
             if(!conference.isClosed()){
-                mCard.setCardBackgroundColor(ContextCompat.getColor(itemView.getContext(),R.color.colorAccent));
+                mTitle.setTextColor(ContextCompat.getColor(itemView.getContext(),R.color.colorAccent));
             }else{
-                mCard.setCardBackgroundColor(ContextCompat.getColor(itemView.getContext(),R.color.icons));
+                mTitle.setTextColor(ContextCompat.getColor(itemView.getContext(),R.color.primaryText));
             }
 
             InviteeAdapter inviteeAdapter = new InviteeAdapter(true);

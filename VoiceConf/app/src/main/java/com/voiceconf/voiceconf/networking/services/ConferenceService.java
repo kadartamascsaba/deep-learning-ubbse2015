@@ -96,6 +96,7 @@ public class ConferenceService {
             public void done(ParseException e) {
                 if (e == null) {
                     // Creating invites
+                    inviteeIds.add(ParseUser.getCurrentUser().getObjectId());
                     for (String id : inviteeIds) {
                         Invite invite = new Invite();
                         Log.d(TAG, "done: " + conference.getObjectId());
