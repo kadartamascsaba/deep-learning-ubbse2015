@@ -44,6 +44,7 @@
         android:layout_marginTop="@dimen/large_padding">
 
         <android.support.v7.widget.RecyclerView
+            android:id="@+id/invitees_recycler"
             android:layout_width="match_parent"
             android:layout_height="124dp"
             app:layoutManager="LinearLayoutManager"

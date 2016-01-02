@@ -27,6 +27,7 @@ public class DataManager extends Observable {
     //endregion
 
     //region GETTER/SETTERS
+
     /**
      * Sets the friend list and notifies the proper observers.
      *
@@ -59,6 +60,7 @@ public class DataManager extends Observable {
     //endregion
 
     //region HELPER METHODS
+
     /**
      * Use this method to get only ParseUser friend objects.
      *
@@ -110,6 +112,15 @@ public class DataManager extends Observable {
         } else {
             return null;
         }
+    }
+
+    public Conference getConference(String conferenceId) {
+        for(Conference conference : mConferences){
+            if(conference.getObjectId().equals(conferenceId)){
+                return conference;
+            }
+        }
+        return null;
     }
     //endregion
 }

@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by Tamas-Csaba Kadar on 1/2/2016.
+ * Created by Tamas-Csaba Kadar on 02 Jan 2016.
  */
 public class Validator {
 
@@ -22,7 +22,7 @@ public class Validator {
             return false;
         }
         if (port < 0 || port > 65535) {
-            return  false;
+            return false;
         }
         return true;
     }

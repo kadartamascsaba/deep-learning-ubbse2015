@@ -15,6 +15,7 @@ import com.voiceconf.voiceconf.storage.models.Invite;
 import com.voiceconf.voiceconf.storage.nonpersistent.VoiceConfApplication;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -103,10 +104,12 @@ public class ConferenceService {
                         invite.setConference(conference.getObjectId());
                         invite.setInvited(id);
                         invites.add(invite);
+                        Collections.reverse(invites);
                     }
                     ParseObject.saveAllInBackground(invites, new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
+                            getConferences(null);
                             if (e == null) {
                                 conference.putInvites(invites);
                                 conference.saveInBackground();
