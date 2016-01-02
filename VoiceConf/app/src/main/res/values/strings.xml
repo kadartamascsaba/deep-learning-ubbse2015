@@ -38,8 +38,10 @@
     <string name="add_friend_dialog_text">Enter your registered friends email address.</string>
     <string name="cancel">@android:string/cancel</string>
     <string name="email">Email</string>
+    <string name="invalid_email">Is not a valid email address</string>
 
     <!--Settings-->
+    <string name="server_access">Server access</string>
     <string name="ip_address_input">IP address</string>
     <string name="port_input">Port</string>
     <string name="save">SAVE</string>
@@ -53,13 +55,9 @@
     <string name="title_activity_select_friends">Select Friends</string>
     <string name="no_friend_placeholder_text">Your friend list is empty.</string>
     <string name="no_friends_guide_text">You can add friends via email on the\n friends tab or the nav. drawer.</string>
-
-    <!--Facebook login-->
-    <string name="facebook_app_id">1000732483317996</string>
-    <string name="server_access">Server access</string>
+    <!--Conference detail-->
     <string name="conference_screen_placeholder_text">The current speak will appear above\n other will be underneath in a grid.</string>
     <string name="jon_snow">Jon Snow</string>
-    <string name="invalid_email">Is not a valid email address</string>
     <string name="invite_more">Invite more</string>
     <string name="synchronise">Synchronise</string>
     <string name="leave_conference">Leave conference</string>
@@ -67,5 +65,8 @@
     <string name="owner_and_invitees"><![CDATA[Owner & invitees]]></string>
     <string name="current_speaker">Current speaker</string>
     <string name="owner">Owner</string>
+
+    <!--Facebook login-->
+    <string name="facebook_app_id">1000732483317996</string>
 
 </resources>
