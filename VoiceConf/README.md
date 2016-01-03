@@ -3,7 +3,7 @@
 * Requirements
 * Installation
 
-We recomend Android Studio for development (v1.4+).
+We recommend Android Studio for development (v1.4+).
 You can open the Project by selecting the VoiceConf directory or the contained build.gradle file.
 
 ### Requirements
@@ -20,18 +20,18 @@ To build and run the project simply press the green Run button with the app sele
 
 #### Building
 
-Building from the command line:
+Building from the command-line:
 
 ``` bash
 ./gradlew assemble
 ```
 
-Note: Cleaning the project is recomended before building but not necesary.
+Note: Cleaning the project is recommended before building but not necessary.
 
 ``` bash
 ./gradlew clean
 ```
 ### Running
-After the build a debug apk is generated yuo can find it in the ```/VoiceConf/app/build/outputs/apk/app-debug.apk```
+After the build a debug apk is generated which you can find it in the ```/VoiceConf/app/build/outputs/apk/app-debug.apk```.
 
 This apk can be installed on any android device by opening it.
