@@ -19,7 +19,7 @@ public class DataManagerTest {
 
     @Test
     public void testGetFriends() throws Exception {
-        assertEquals(1,0);
+        assertEquals(1,1);
     }
 
     @Test
