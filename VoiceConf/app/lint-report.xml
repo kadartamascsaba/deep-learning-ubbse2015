@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="4" by="lint 25.0.1 rc2">
+
+    <issue
+        id="UnusedResources"
+        severity="Warning"
+        message="The resource `R.string.gcm_defaultSenderId` appears to be unused"
+        category="Performance"
+        priority="3"
+        summary="Unused resources"
+        explanation="Unused resources make applications larger and slow down builds."
+        errorLine1="    &lt;string name=&quot;gcm_defaultSenderId&quot; translatable=&quot;false&quot;>1019622997176&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/halcyon/deep-learning-ubbse2015/VoiceConf/app/build/generated/res/google-services/release/values/values.xml"
+            line="3"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        severity="Warning"
+        message="The resource `R.string.google_app_id` appears to be unused"
+        category="Performance"
+        priority="3"
+        summary="Unused resources"
+        explanation="Unused resources make applications larger and slow down builds."
+        errorLine1="    &lt;string name=&quot;google_app_id&quot;>1:1019622997176:android:c31bc03b7dfedf18&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Users/halcyon/deep-learning-ubbse2015/VoiceConf/app/build/generated/res/google-services/release/values/values.xml"
+            line="4"
+            column="13"/>
+    </issue>
+
+</issues>

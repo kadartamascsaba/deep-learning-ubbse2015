@@ -6,7 +6,8 @@
     android:paddingBottom="@dimen/content_padding"
     android:paddingLeft="@dimen/content_padding"
     android:paddingStart="@dimen/content_padding"
-    android:paddingTop="@dimen/content_padding">
+    android:paddingTop="@dimen/content_padding"
+    tools:ignore="RtlSymmetry">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_avatar"
@@ -18,7 +19,8 @@
     <ImageView
         android:id="@+id/user_avatar_style"
         android:layout_width="@dimen/min_view_height"
-        android:layout_height="@dimen/min_view_height" />
+        android:layout_height="@dimen/min_view_height"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/user_name"

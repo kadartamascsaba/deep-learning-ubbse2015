@@ -7,6 +7,6 @@
     <color name="primaryText">#212121</color>
     <!--<color name="secondaryText">#727272</color>-->
     <color name="icons">#FFFFFF</color>
-    <color name="divider">#B6B6B6</color>
+    <color name="divider">#dfdfdf</color>
     <color name="selectedFriend">#DD455A64</color>
 </resources>
