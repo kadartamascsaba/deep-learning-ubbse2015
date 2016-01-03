@@ -4,7 +4,7 @@
 * Installation
 
 We recommend Android Studio for development (v1.4+).
-You can open the Project by selecting the VoiceConf directory or the contained build.gradle file.
+You can open the Project by selecting the VoiceConf directory or the build.gradle file within it.
 
 ### Requirements
 You will have to install these tools from the android SDK manager
@@ -16,7 +16,7 @@ You will have to install these tools from the android SDK manager
 - Android SDK 23.0.2
 
 ### Installation
-To build and run the project simply press the green Run button, with the "app" selected as configuration. (You will need an android mobie device or an emulator with google play services)
+To build and run the project simply press the green Run button, with the "app" selected as configuration. (You will need an android mobile device or an emulator with Google Play Services)
 
 #### Building
 
@@ -33,7 +33,7 @@ Note: Cleaning the project is recommended before building but not necessary.
 ```
 #### Testing
 
-Run Unit tests from the command line:
+Run Unit tests from the command-line:
 
 ``` bash
 ./gradlew test
