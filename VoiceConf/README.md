@@ -16,7 +16,7 @@ You will have to install these tools from the android SDK manager
 - Android SDK 23.0.2
 
 ### Installation
-To build and run the project simply press the green Run button with the app selected as configuration. (You will need an android mobie device or an emulator with google play services)
+To build and run the project simply press the green Run button, with the "app" selected as configuration. (You will need an android mobie device or an emulator with google play services)
 
 #### Building
 
@@ -31,6 +31,14 @@ Note: Cleaning the project is recommended before building but not necessary.
 ``` bash
 ./gradlew clean
 ```
+#### Testing
+
+Run Unit tests from the command line:
+
+``` bash
+./gradlew test
+```
+
 ### Running
 After the build a debug apk is generated which you can find it in the ```/VoiceConf/app/build/outputs/apk/app-debug.apk```.
 
