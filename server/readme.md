@@ -4,9 +4,6 @@
 * Requirements
 * Installation
 
-### Version
-**1.0**
-
 ### Requirements
  * python 2.7
  * py2exe 0.6.9
