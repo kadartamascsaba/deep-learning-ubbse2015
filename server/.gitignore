@@ -1,0 +1,5 @@
+*.pyc
+/build
+/dist
+/nosetests.xml
+/deep-learning-server.zip

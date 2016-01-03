@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
+    tools:ignore="Overdraw"
     tools:context=".ui.main.MainActivity">
 
     <android.support.v7.widget.AppCompatTextView
@@ -28,7 +29,9 @@
         android:layout_marginBottom="@dimen/large_padding"
         android:layout_marginEnd="@dimen/large_padding"
         android:layout_marginRight="@dimen/large_padding"
-        android:gravity="bottom"
+        android:layout_toEndOf="@id/app_name_text"
+        android:layout_toRightOf="@id/app_name_text"
+        android:gravity="bottom|end"
         android:text="@string/version"
         android:textColor="@color/icons"
         android:textSize="@dimen/text_size_body" />

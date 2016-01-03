@@ -1,5 +1,6 @@
 package com.voiceconf.voiceconf.ui.conference;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -103,6 +104,7 @@ public class ConferenceActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onStart() {
         super.onStart();
@@ -115,10 +117,23 @@ public class ConferenceActivity extends AppCompatActivity {
             mSpeakerDuration.setText("Duration\n" + minutes / 60 + " h " + minutes % 60 + " min");
 
             mAdapter.update(mConference.getInvitees());
+
+            if(mConference.isClosed()){
+                ((TextView) findViewById(R.id.speaker_title)).setText(R.string.owner);
+
+                findViewById(R.id.conference_toolbar).setVisibility(View.GONE);
+                findViewById(R.id.conference_close).setVisibility(View.GONE);
+                findViewById(R.id.fab).setVisibility(View.GONE);
+
+                Glide.with(this).load(User.getAvatar(mConference.getOwner())).into(mSpeakerAvatar);
+                mSpeakerName.setText(mConference.getOwner().getUsername());
+
+            }else{
+                ParseUser user = ParseUser.getCurrentUser();
+                Glide.with(this).load(User.getAvatar(user)).into(mSpeakerAvatar);
+                mSpeakerName.setText(user.getUsername());
+            }
         }
-        ParseUser user = ParseUser.getCurrentUser();
-        Glide.with(this).load(User.getAvatar(user)).into(mSpeakerAvatar);
-        mSpeakerName.setText(user.getUsername());
     }
 
     @Override

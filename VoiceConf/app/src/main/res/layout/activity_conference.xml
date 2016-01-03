@@ -23,24 +23,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/conference_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="28sp"
-                    android:textColor="@color/icons"
-                    android:text="Conference title"
                     android:gravity="bottom"
-                    />
+                    android:textColor="@color/icons"
+                    android:textSize="28sp"
+                    tools:text="Conference title" />
+
                 <TextView
                     android:id="@+id/conference_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_size_subhead"
-                    android:textColor="@color/icons"
-                    android:text="02/Jan/2016"
                     android:gravity="bottom"
-                    />
+                    android:textColor="@color/icons"
+                    android:textSize="@dimen/text_size_subhead"
+                    tools:text="02/Jan/2016" />
             </LinearLayout>
 
         </android.support.v7.widget.Toolbar>

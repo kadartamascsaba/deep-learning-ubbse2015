@@ -7,3 +7,5 @@
 
 The project will use the [ELSDSR](http://www.imm.dtu.dk/~lfen/elsdsr/) database for training and testing, but we also might generate additional data with noise samples from the [PRISM-set](https://code.google.com/p/prism-set/) to increase accuracy.
 
+## Setup
+For more information about the building and installing read the [server](https://github.com/triqla/deep-learning-ubbse2015/blob/master/server/readme.md) and [application](https://github.com/triqla/deep-learning-ubbse2015/blob/master/VoiceConf/README.md) readmes.

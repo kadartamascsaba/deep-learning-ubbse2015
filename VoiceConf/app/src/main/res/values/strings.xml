@@ -6,7 +6,6 @@
 
     <string name="title_activity_settings">Settings</string>
     <string name="title_conference_detail">Conference Detail</string>
-    <string name="title_activity_conference">Conference</string>
 
     <!--LOGIN-->
     <string name="login_call_to_action">smart voice \nconferencing</string>
@@ -22,7 +21,7 @@
     <string name="settings">Settings</string>
     <string name="log_out">Log out</string>
     <string name="under_development">Under development.</string>
-    <string name="version">v0.1.0.2</string>
+    <string name="version">v0.1.0.3</string>
 
     <!--History-->
     <string name="history_placeholder_text">Your conference\n history will appear here …</string>
@@ -56,14 +55,13 @@
     <string name="no_friend_placeholder_text">Your friend list is empty.</string>
     <string name="no_friends_guide_text">You can add friends via email on the\n friends tab or the nav. drawer.</string>
     <!--Conference detail-->
-    <string name="conference_screen_placeholder_text">The current speak will appear above\n other will be underneath in a grid.</string>
     <string name="jon_snow">Jon Snow</string>
     <string name="invite_more">Invite more</string>
     <string name="synchronise">Synchronise</string>
-    <string name="leave_conference">Leave conference</string>
     <string name="voume_off">Voume off</string>
     <string name="owner_and_invitees"><![CDATA[Owner & invitees]]></string>
     <string name="current_speaker">Current speaker</string>
+    <string name="owner">Owner</string>
 
     <!--Facebook login-->
     <string name="facebook_app_id">1000732483317996</string>
