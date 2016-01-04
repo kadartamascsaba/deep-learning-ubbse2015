@@ -15,4 +15,4 @@ def remote_copy(server, user, src, dst, passw):
     return all_output
 
 if __name__ == "__main__":
-	print remote_copy("triqla.ddns.net", "pi","foo.bar","/home/pi/foo", str(sys.argv[1]))
+	print remote_copy("pdae.cs.ubbcluj.ro", "optim","foo.bar","/home/pi/foo", str(sys.argv[1]))
