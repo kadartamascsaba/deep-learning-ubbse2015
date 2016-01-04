@@ -1,0 +1,6 @@
+#!/usr/bin/expect
+spawn scp foo.bar pi@triqla.ddns.net:/home/pi/foo.bar
+set pass $1
+expect {
+	password: {send "$pass\r"; exp_continue}
+}
