@@ -8,7 +8,7 @@ def remote_copy(server, user, src, dst, passw):
     path = os.getcwd()
     print path
     p = Popen(
-        '%(path)s\pscp -batch -pw %(passw)s %(src)s %(user)s@%(server)s:%(dst)s' % locals(), 
+        '%(path)s\pscp -batch -P 2222 -pw %(passw)s %(src)s %(user)s@%(server)s:%(dst)s' % locals(), 
         shell=True, stdout=PIPE, stderr=STDOUT
     )
     all_output, null = p.communicate()
