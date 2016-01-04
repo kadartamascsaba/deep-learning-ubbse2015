@@ -6,6 +6,7 @@ import os
 # you must pre-configure putty/pscp to use pub key auth
 def remote_copy(server, user, src, dst, passw):
     path = os.getcwd()
+    path = "\ ".join(path.split(" "))
     print path
     p = Popen(
         '%(path)spscp -pw %(passw)s %(src)s %(user)s@%(server)s:%(dst)s' % locals(), 
