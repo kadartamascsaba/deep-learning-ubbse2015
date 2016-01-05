@@ -41,7 +41,7 @@ public class DataManagerTest {
         assertNull(mDataManager.getConferences());
         ArrayList<Conference> conferences = new ArrayList<>();
         mDataManager.setConferences(conferences);
-        assertNotEquals(mDataManager.getFriends(), null);
+        assertNotEquals(mDataManager.getConferences(), null);
     }
 
     @Test
@@ -51,6 +51,8 @@ public class DataManagerTest {
 
     @Test
     public void testGetConference() throws Exception {
+        ArrayList<Conference> conferences = new ArrayList<>();
+        mDataManager.setConferences(conferences);
         assertNull(mDataManager.getConference("alma"));
     }
 }
