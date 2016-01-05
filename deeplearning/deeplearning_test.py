@@ -11,7 +11,7 @@ class TestDeepLearning(unittest.TestCase):
 
     # spectrogram.stereo_to_mono is expected to return -1 if the number of dimensions of the input array is > 2
     def testStereoToMonoConverterReturnsSpecialValueInCaseOfWrongDimensions(self):
-        self.assertEqual(spectrogram.stereo_to_mono(numpy.array([[[]]])), -1)
+        self.assertEqual(spectrogram.stereo_to_mono(numpy.array([[[]]])), 2)
 
     # spectrogram.stft is expected to raise exception if the input is array
     def testStftRaisesExceptionInCaseOfEmptyInput(self):
@@ -23,7 +23,7 @@ class TestDeepLearning(unittest.TestCase):
         self.assertEqual(test.shape[1], 601)
 
     # neuralnetwork.Net class is expected to be instatiate correctly
-    def testNeuralNetworkCanBeInstatiateCorrectly(self):
+    def testNeuralNetworkCanBeInstatiatedCorrectly(self):
         n = neuralnetwork.Net()
         self.assertIsInstance(n, neuralnetwork.Net)
 
