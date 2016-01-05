@@ -42,10 +42,6 @@ public class DataManagerTest {
         ArrayList<Conference> conferences = new ArrayList<>();
         mDataManager.setConferences(conferences);
         assertNotEquals(mDataManager.getFriends(), null);
-        conferences.add(new Conference());
-        conferences.add(new Conference());
-        conferences.add(new Conference());
-        assertEquals(mDataManager.getFriends().size(), 3);
     }
 
     @Test
