@@ -45,10 +45,7 @@ public class DataManagerTest {
         conferences.add(new Conference());
         conferences.add(new Conference());
         conferences.add(new Conference());
-        Conference conference = new Conference();
-        conference.setObjectId("korte");
-        conferences.add(conference);
-        assertEquals(mDataManager.getFriends().size(), 4);
+        assertEquals(mDataManager.getFriends().size(), 3);
     }
 
     @Test
@@ -59,6 +56,5 @@ public class DataManagerTest {
     @Test
     public void testGetConference() throws Exception {
         assertNull(mDataManager.getConference("alma"));
-        assertNotNull(mDataManager.getConference("kote"));
     }
 }
