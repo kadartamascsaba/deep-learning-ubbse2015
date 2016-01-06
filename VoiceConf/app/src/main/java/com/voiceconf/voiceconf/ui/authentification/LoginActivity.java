@@ -40,12 +40,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private static final int RC_SIGN_IN = 9001;
     private static final String GOOGLE_USER_ID = "{\"GoogleUserID\" : \"";
-    private static final String FACEBOOK_USER_ID = "{\"FacebookUserID\" : \"";
     private static final String AUTH_DATA_END = "\"}";
     private static final String DEFAULT_PASSWORD = "voiceConf";
     private GoogleApiClient mGoogleApiClient;
     private SignInButton mSignInButton;
-    private LoginButton fbLoginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
         });
 
-        fbLoginButton = (LoginButton) findViewById(R.id.fb_login_button);
+        LoginButton fbLoginButton = (LoginButton) findViewById(R.id.fb_login_button);
         fbLoginButton.setReadPermissions("user_friends");
         CallbackManager callbackManager = CallbackManager.Factory.create();
 
