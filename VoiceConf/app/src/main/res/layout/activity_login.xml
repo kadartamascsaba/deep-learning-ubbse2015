@@ -28,24 +28,8 @@
         android:id="@+id/sign_in_button"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_above="@+id/fb_login_button"
-        android:layout_marginLeft="@dimen/large_padding"
-        android:layout_marginRight="@dimen/large_padding" />
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@id/fb_login_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="@dimen/large_padding"
         android:layout_marginBottom="@dimen/large_padding"
         android:layout_marginLeft="@dimen/large_padding"
-        android:layout_marginRight="@dimen/large_padding"
-        android:paddingBottom="@dimen/large_padding"
-        android:paddingEnd="@dimen/large_padding"
-        android:paddingLeft="@dimen/large_padding"
-        android:paddingRight="@dimen/large_padding"
-        android:paddingStart="@dimen/large_padding"
-        android:paddingTop="@dimen/large_padding" />
+        android:layout_marginRight="@dimen/large_padding" />
 </RelativeLayout>
