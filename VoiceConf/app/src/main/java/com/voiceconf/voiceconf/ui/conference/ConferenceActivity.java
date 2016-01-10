@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.parse.ParseUser;
 import com.voiceconf.voiceconf.R;
+import com.voiceconf.voiceconf.networking.services.ConferenceService;
 import com.voiceconf.voiceconf.storage.models.Conference;
 import com.voiceconf.voiceconf.storage.models.User;
 import com.voiceconf.voiceconf.storage.nonpersistent.DataManager;
@@ -96,6 +97,7 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
         findViewById(R.id.conference_sync).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ConferenceService.getConferences(null);
                 updateScreen();
             }
         });
