@@ -21,7 +21,7 @@
     <string name="settings">Settings</string>
     <string name="log_out">Log out</string>
     <string name="under_development">Under development.</string>
-    <string name="version">v0.1.0.3</string>
+    <string name="version">v0.1.0.4</string>
 
     <!--History-->
     <string name="history_placeholder_text">Your conference\n history will appear here …</string>
