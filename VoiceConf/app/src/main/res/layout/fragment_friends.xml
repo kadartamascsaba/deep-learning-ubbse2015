@@ -10,7 +10,8 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/friend_swipe_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="@dimen/large_padding">
 
         <com.voiceconf.voiceconf.ui.view.PlaceholderRecyclerView
             android:id="@+id/friend_recycler"

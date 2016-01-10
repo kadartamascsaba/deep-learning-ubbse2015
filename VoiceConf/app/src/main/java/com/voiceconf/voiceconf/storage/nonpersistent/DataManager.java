@@ -85,7 +85,6 @@ public class DataManager extends Observable {
         }
     }
 
-
     /**
      * Helper method to get the user given a list of ids.
      *
@@ -93,7 +92,7 @@ public class DataManager extends Observable {
      * @return List of requested users.
      */
     public List<ParseUser> getUsers(@NonNull ArrayList<String> stringArrayListExtra) {
-        if (mFriends != null) {
+        if (mFriends != null && stringArrayListExtra.size() > 0) {
             List<ParseUser> friends = new ArrayList<>();
             for (Friend friend : mFriends) {
                 if (!friend.isPending()) {
@@ -114,7 +113,7 @@ public class DataManager extends Observable {
         }
     }
 
-    public Conference getConference(String conferenceId) {
+    public Conference getConference(@NonNull String conferenceId) {
         for(Conference conference : mConferences){
             if(conference.getObjectId().equals(conferenceId)){
                 return conference;
