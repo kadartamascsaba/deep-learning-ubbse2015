@@ -31,6 +31,7 @@ android {
     }
     lintOptions {
         xmlReport true
+        abortOnError false
         xmlOutput file("lint-report.xml")
     }
 }
