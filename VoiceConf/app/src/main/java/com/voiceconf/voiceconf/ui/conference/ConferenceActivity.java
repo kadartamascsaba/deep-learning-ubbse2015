@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioFormat;
+import android.media.AudioManager;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -61,7 +63,9 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
     private Conference mConference;
     private TextView mSpeakerStarted;
     private TextView mSpeakerDuration;
+    private ImageButton mMute;
     private FloatingActionButton startButton, stopButton;
+    private boolean mute;
     //endregion
 
     //region LIFE CYCLE METHODS
@@ -116,7 +120,23 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
                 updateScreen();
             }
         });
-        findViewById(R.id.conference_mute).setOnClickListener(underDevelopment);
+
+        mute = false;
+        mMute = (ImageButton) findViewById(R.id.conference_mute);
+        mMute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mute  = !mute;
+                AudioManager myAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                myAudioManager.setMicrophoneMute(mute);
+                if(mute){
+                    mMute.setImageResource(R.drawable.ic_volume_up_white_24dp);
+                }
+                else{
+                    mMute.setImageResource(R.drawable.ic_volume_off_white_24dp);
+                }
+            }
+        });
         findViewById(R.id.conference_settings).setOnClickListener(underDevelopment);
 
         findViewById(R.id.conference_close).setOnClickListener(new View.OnClickListener() {
