@@ -17,6 +17,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="GreenTheme" parent="AppTheme">
+        <item name="colorAccent">#52FF52</item>
+    </style>
+
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

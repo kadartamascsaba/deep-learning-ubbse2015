@@ -3,6 +3,9 @@ package com.voiceconf.voiceconf.ui.conference;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioFormat;
+import android.media.AudioRecord;
+import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -27,6 +31,11 @@ import com.voiceconf.voiceconf.storage.nonpersistent.DataManager;
 import com.voiceconf.voiceconf.storage.nonpersistent.VoiceConfApplication;
 import com.voiceconf.voiceconf.ui.main.MainActivity;
 
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Observable;
@@ -40,14 +49,20 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class ConferenceActivity extends AppCompatActivity implements Observer {
 
+    //region CONSTANTS
     private static final String TAG = "ConferenceActivity";
     private static final String CONFERENCE_ID = "conference_id";
+    //endregion
+
+    //region VARIABLES
     private InviteeAdapter mAdapter;
     private CircleImageView mSpeakerAvatar;
     private TextView mSpeakerName;
     private Conference mConference;
     private TextView mSpeakerStarted;
     private TextView mSpeakerDuration;
+    private FloatingActionButton startButton, stopButton;
+    //endregion
 
     //region LIFE CYCLE METHODS
     @Override
@@ -111,6 +126,11 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
                 closeConference();
             }
         });
+
+        startButton = (FloatingActionButton) findViewById(R.id.fab);
+        stopButton = (FloatingActionButton) findViewById(R.id.conference_close);
+        startButton.setOnClickListener(startListener);
+        stopButton.setOnClickListener(stopListener);
     }
 
     @Override
@@ -152,7 +172,6 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
         finish();
     }
 
-    @SuppressLint("SetTextI18n")
     private void updateScreen() {
         mConference = VoiceConfApplication.sDataManager.getConference(getIntent().getStringExtra(CONFERENCE_ID));
         if (mConference != null) {
@@ -189,4 +208,66 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
             updateScreen();
         }
     }
+
+    // region COMMUNICATION
+    public byte[] buffer;
+    public static DatagramSocket socket;
+    private int port = 6789;
+    AudioRecord recorder = null;
+    private int sampleRate = 16000; // 44100 for music
+    private int channelConfig = AudioFormat.CHANNEL_OUT_STEREO;
+    private int audioFormat = AudioFormat.ENCODING_PCM_16BIT;
+    int minBufSize = 4096;
+    private boolean status = true;
+
+    private final View.OnClickListener stopListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View arg0) {
+            status = false;
+            recorder.release();
+            Log.d("VS", "Recorder released");
+        }
+    };
+    private final View.OnClickListener startListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View arg0) {
+            status = true;
+            startStreaming();
+        }
+    };
+    public void startStreaming() {
+        Thread streamThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    DatagramSocket socket = new DatagramSocket();
+                    Log.d("VS", "Socket Created");
+                    byte[] buffer = new byte[minBufSize];
+                    Log.d("VS", "Buffer created of size " + minBufSize);
+                    DatagramPacket packet;
+                    Log.d("VS", "Address retrieved");
+                    final InetAddress destination = InetAddress.getByName("192.168.1.157");
+                    Log.d("VS", "Address retrieved");
+                    recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, channelConfig, audioFormat, minBufSize);
+                    Log.d("VS", "Recorder initialized");
+                    recorder.startRecording();
+                    while (status == true) {
+                        //reading data from MIC into buffer
+                        minBufSize = recorder.read(buffer, 0, buffer.length);
+                        //putting buffer in the packet
+                        packet = new DatagramPacket(buffer, buffer.length, destination, port);
+                        socket.send(packet);
+                        System.out.println("BufferSize: " + buffer.length);
+                    }
+                } catch (UnknownHostException e) {
+                    Log.e("VS", "UnknownHostException", e);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.e("VS", "" + e);
+                }
+            }
+        });
+        streamThread.start();
+    }
+    // endregion
 }
