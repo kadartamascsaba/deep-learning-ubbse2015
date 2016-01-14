@@ -52,11 +52,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.facebook.FacebookActivity"
-            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
             android:name=".ui.conference.setup.select_friends.SelectFriendsActivity"
             android:label="@string/title_activity_select_friends"
             android:theme="@style/AppTheme.NoActionBar" />

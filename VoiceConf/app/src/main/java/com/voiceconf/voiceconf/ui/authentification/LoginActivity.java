@@ -29,17 +29,24 @@ import com.voiceconf.voiceconf.networking.services.LoginService;
 import com.voiceconf.voiceconf.storage.models.User;
 import com.voiceconf.voiceconf.ui.main.MainActivity;
 
-
 /**
  * This activity handles the user login.
+ *
+ * Created by Attila Blenesi
+ * Edited by Zoltan Benedek
  */
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
 
+    // region CONSTANTS
     private static final String TAG = "LoginActivity";
     private static final int RC_SIGN_IN = 9001;
     private static final String GOOGLE_USER_ID = "{\"GoogleUserID\" : \"";
+    // endregion
+
+    // region VARIABLES
     private GoogleApiClient mGoogleApiClient;
     private SignInButton mSignInButton;
+    // endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,8 +106,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     }
 
                     @Override
-                    public void onFailure(Exception e, String message) {
-                        somethingWentWrong(message + " " + e.toString());
+                    public void onFailure(Exception e) {
+                        somethingWentWrong(e.toString());
                     }
                 }, acct.getDisplayName(), acct.getPhotoUrl().toString(), GOOGLE_USER_ID, acct.getId(), acct.getEmail());
             } else {

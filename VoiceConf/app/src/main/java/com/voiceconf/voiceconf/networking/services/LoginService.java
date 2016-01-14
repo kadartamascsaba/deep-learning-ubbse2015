@@ -1,7 +1,5 @@
 package com.voiceconf.voiceconf.networking.services;
 
-import android.content.Intent;
-
 import com.parse.GetCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -10,10 +8,10 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.parse.SignUpCallback;
 import com.voiceconf.voiceconf.storage.models.User;
-import com.voiceconf.voiceconf.ui.main.MainActivity;
 
 /**
  * Created by Zoltán Benedek on 12/30/2015.
+ * Edited by Attila Blenesi
  */
 public class LoginService {
     private static final String AUTH_DATA_END = "\"}";
@@ -47,12 +45,12 @@ public class LoginService {
                                             // Creating user was successful starting the main activity
                                             callback.onSucces();
                                         } else {
-                                            callback.onFailure(e,e.getMessage());
+                                            callback.onFailure(e);
                                         }
                                     }
                                 });
                             } else {
-                                callback.onFailure(e,e.getMessage());
+                                callback.onFailure(e);
                             }
                         }
                     });
@@ -65,7 +63,7 @@ public class LoginService {
                                 // Existing user logged in successfully starting the main activity
                                 callback.onSucces();
                             } else {
-                               callback.onFailure(e,e.getMessage());
+                                callback.onFailure(e);
                             }
                         }
                     });

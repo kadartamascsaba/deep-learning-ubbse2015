@@ -38,7 +38,7 @@ public class FriendViewHolder extends BaseFriendViewHolder {
             mDecline.setTag(friend);
 
             // Select the correct user to be displayed
-            if (ParseUser.getCurrentUser().getObjectId().equals(friend.getUser().getObjectId())) {
+            if (ParseUser.getCurrentUser() != null && friend.getUser() != null && ParseUser.getCurrentUser().getObjectId().equals(friend.getUser().getObjectId())) {
                 setup(friend.getFriend());
                 if (friend.isPending()) {
                     mPendingText.setVisibility(View.VISIBLE);
