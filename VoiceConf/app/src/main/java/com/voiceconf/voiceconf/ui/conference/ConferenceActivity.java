@@ -75,6 +75,14 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conference);
 
+        serverPort = SharedPreferenceManager.getInstance(getApplicationContext()).getSavedPort();
+        ipAddress = SharedPreferenceManager.getInstance(getApplicationContext()).getSavedIpAddress();
+        try {
+            destination = InetAddress.getByName(ipAddress);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -127,13 +135,12 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
         mMute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mute  = !mute;
+                mute = !mute;
                 AudioManager myAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
                 myAudioManager.setMicrophoneMute(mute);
-                if(mute){
+                if (mute) {
                     mMute.setImageResource(R.drawable.ic_volume_up_white_24dp);
-                }
-                else{
+                } else {
                     mMute.setImageResource(R.drawable.ic_volume_off_white_24dp);
                 }
             }
@@ -234,8 +241,9 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
     private static DatagramSocket socketOut;
     private static DatagramSocket socketIn;
 
-    private String ipAddress = SharedPreferenceManager.getInstance(this).getSavedIpAddress();
-    private int serverPort = Integer.parseInt(SharedPreferenceManager.getInstance(this).getSavedPort());
+    private InetAddress destination;
+    private String ipAddress;
+    private int serverPort;
     private int clientPort = 56789;
 
     private int sampleRate = 16000;
@@ -252,7 +260,18 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
         @Override
         public void onClick(View arg0) {
             status = false;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        new DatagramSocket().send(new DatagramPacket("stop".getBytes(), "stop".getBytes().length, destination, serverPort));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
             recorder.release();
+            track.release();
         }
     };
     private final View.OnClickListener startListener = new View.OnClickListener() {
@@ -269,8 +288,7 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
     }
 
     private void recordSound() {
-
-        Thread recordThread = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -278,8 +296,8 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
                     byte[] buffer = new byte[minBufSize];
 
                     DatagramPacket packet;
-                    final InetAddress destination = InetAddress.getByName(ipAddress);
-
+                    packet = new DatagramPacket("start".getBytes(), "start".getBytes().length, destination, serverPort);
+                    socketOut.send(packet);
                     recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, channelConfig, audioFormat, minBufSize);
                     recorder.startRecording();
 
@@ -289,6 +307,7 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
                         packet = new DatagramPacket(buffer, buffer.length, destination, serverPort);
                         socketOut.send(packet);
                     }
+
                 } catch (UnknownHostException e) {
                     Log.e("VS", "UnknownHostException", e);
                 } catch (IOException e) {
@@ -296,8 +315,7 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
                     Log.e("VS", "" + e);
                 }
             }
-        });
-        recordThread.start();
+        }).start();
     }
 
     private void playSound() {
