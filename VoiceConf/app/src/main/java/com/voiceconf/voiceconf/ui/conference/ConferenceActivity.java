@@ -1,11 +1,11 @@
 package com.voiceconf.voiceconf.ui.conference;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioRecord;
+import android.media.AudioTrack;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,7 +19,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -30,6 +29,7 @@ import com.voiceconf.voiceconf.networking.services.ConferenceService;
 import com.voiceconf.voiceconf.storage.models.Conference;
 import com.voiceconf.voiceconf.storage.models.User;
 import com.voiceconf.voiceconf.storage.nonpersistent.DataManager;
+import com.voiceconf.voiceconf.storage.nonpersistent.SharedPreferenceManager;
 import com.voiceconf.voiceconf.storage.nonpersistent.VoiceConfApplication;
 import com.voiceconf.voiceconf.ui.main.MainActivity;
 
@@ -37,6 +37,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -230,22 +231,28 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
     }
 
     // region COMMUNICATION
-    public byte[] buffer;
-    public static DatagramSocket socket;
-    private int port = 6789;
-    AudioRecord recorder = null;
-    private int sampleRate = 16000; // 44100 for music
+    private static DatagramSocket socketOut;
+    private static DatagramSocket socketIn;
+
+    private String ipAddress = SharedPreferenceManager.getInstance(this).getSavedIpAddress();
+    private int serverPort = Integer.parseInt(SharedPreferenceManager.getInstance(this).getSavedPort());
+    private int clientPort = 56789;
+
+    private int sampleRate = 16000;
     private int channelConfig = AudioFormat.CHANNEL_OUT_STEREO;
     private int audioFormat = AudioFormat.ENCODING_PCM_16BIT;
-    int minBufSize = 4096;
-    private boolean status = true;
+    private int minBufSize = 4096;
+
+    private static boolean status = false;
+
+    private AudioRecord recorder = null;
+    private AudioTrack track = null;
 
     private final View.OnClickListener stopListener = new View.OnClickListener() {
         @Override
         public void onClick(View arg0) {
             status = false;
             recorder.release();
-            Log.d("VS", "Recorder released");
         }
     };
     private final View.OnClickListener startListener = new View.OnClickListener() {
@@ -255,29 +262,32 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
             startStreaming();
         }
     };
-    public void startStreaming() {
-        Thread streamThread = new Thread(new Runnable() {
+
+    private void startStreaming() {
+        recordSound();
+        playSound();
+    }
+
+    private void recordSound() {
+
+        Thread recordThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    DatagramSocket socket = new DatagramSocket();
-                    Log.d("VS", "Socket Created");
+                    socketOut = new DatagramSocket();
                     byte[] buffer = new byte[minBufSize];
-                    Log.d("VS", "Buffer created of size " + minBufSize);
+
                     DatagramPacket packet;
-                    Log.d("VS", "Address retrieved");
-                    final InetAddress destination = InetAddress.getByName("192.168.1.157");
-                    Log.d("VS", "Address retrieved");
+                    final InetAddress destination = InetAddress.getByName(ipAddress);
+
                     recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, channelConfig, audioFormat, minBufSize);
-                    Log.d("VS", "Recorder initialized");
                     recorder.startRecording();
+
                     while (status == true) {
-                        //reading data from MIC into buffer
                         minBufSize = recorder.read(buffer, 0, buffer.length);
-                        //putting buffer in the packet
-                        packet = new DatagramPacket(buffer, buffer.length, destination, port);
-                        socket.send(packet);
-                        System.out.println("BufferSize: " + buffer.length);
+
+                        packet = new DatagramPacket(buffer, buffer.length, destination, serverPort);
+                        socketOut.send(packet);
                     }
                 } catch (UnknownHostException e) {
                     Log.e("VS", "UnknownHostException", e);
@@ -287,7 +297,39 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
                 }
             }
         });
-        streamThread.start();
+        recordThread.start();
+    }
+
+    private void playSound() {
+
+        Thread playThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    socketIn = new DatagramSocket(clientPort);
+
+                    track = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, channelConfig, audioFormat, minBufSize, AudioTrack.MODE_STREAM);
+                    track.play();
+
+                    try {
+                        byte[] buf = new byte[minBufSize];
+
+                        while (status == true) {
+                            DatagramPacket pack = new DatagramPacket(buf, minBufSize);
+                            socketIn.receive(pack);
+                            track.write(pack.getData(), 0, pack.getLength());
+                        }
+                    } catch (SocketException se) {
+                        Log.e("", "SocketException: " + se.toString());
+                    } catch (IOException ie) {
+                        Log.e("", "IOException" + ie.toString());
+                    }
+                } catch (SocketException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        playThread.start();
     }
     // endregion
 }

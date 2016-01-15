@@ -31,7 +31,6 @@ public class SharedPreferenceManager {
         SharedPreferences.Editor editor = this.mSharedPrefs.edit();
         editor.putString(KEY_IP, ip);
         editor.putString(KEY_PORT, port);
-        // TODO CR: [BAttila | High] Test saveing the setting server parameters. [BAttila]
         editor.apply();
     }
 
