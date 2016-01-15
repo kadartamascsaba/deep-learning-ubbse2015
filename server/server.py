@@ -1,9 +1,10 @@
 import SocketServer
+import sys
 
 clients = []
 client_frame = []
 
-class Client(SocketServer.BaseRequestHandler):
+class ClientHandler(SocketServer.BaseRequestHandler):
 
 	def flush(self):
 		global client_frame
@@ -14,15 +15,14 @@ class Client(SocketServer.BaseRequestHandler):
 		global clients
 		global client_frame
 
-		if msg == "hello":
+		if msg.startswith("start"):
 			print self.client_address[0] + " connected."
 			clients.append(self.client_address)
 			client_frame.append([])
-			print clients
 			return True
-		elif msg == "bye":
+		elif msg.startswith("stop"):
 			print self.client_address[0] + " disconnected."
-			index = next(i for i, (t1, t2) in enumerate(clients) if (t1 == self.client_address[0] and t2 == self.client_address[1]))
+			index = next(i for i, (t1, t2) in enumerate(clients) if (t1 == self.client_address[0]))
 			del clients[index]
 			return True
 				
@@ -31,7 +31,6 @@ class Client(SocketServer.BaseRequestHandler):
 	def handle(self):
 		global clients
 		global client_frame
-		
 		
 		data = self.request[0]
 		socket = self.request[1]
@@ -42,11 +41,12 @@ class Client(SocketServer.BaseRequestHandler):
 				client_frame[index].append(data)
 				for x in clients:
 					if x[0] != self.client_address[0] or x[1] != self.client_address[1]:
-						socket.sendto(client_frame[index].pop(0), x)
+						address = (x[0], 56789)
+						socket.sendto(client_frame[index].pop(0), address)
 			else:
 				self.flush()
 
 if __name__ == "__main__":
-	HOST, PORT = "93.115.39.196", 6789
-	server = SocketServer.UDPServer((HOST, PORT), Client)
+	HOST, PORT = str(sys.argv[1]), int(sys.argv[2])
+	server = SocketServer.UDPServer((HOST, PORT), ClientHandler)
 	server.serve_forever()
