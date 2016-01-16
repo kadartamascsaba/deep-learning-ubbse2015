@@ -22,8 +22,8 @@ if __name__ == '__main__':
 
 	logger = buildLogger('Server-dist')
 	
-	startScript = '%s/server.py' %(getcwd())
-	distDir = '%s/dist' %(getcwd())
+	startScript = '%s\server.py' %(getcwd())
+	distDir = '%s\dist' %(getcwd())
 	distZipFile = '%s/deep-learning-server.zip' %(getcwd())
 	
 	options = {
