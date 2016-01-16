@@ -1,8 +1,9 @@
-## Description of the server of the VoiceConf application 
+### Description of the server of the VoiceConf application 
 ### Table of contents
 * Version
 * Requirements
 * Installation
+* WARNING!
 
 ### Version
 **1.0**
@@ -27,3 +28,7 @@ The resulting executable is for command-line use and it does not require any com
 cd dist
 server
 ```
+
+### WARNING!
+
+Be sure to rewrite all IP adresses to local machine's IP adress
