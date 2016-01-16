@@ -7,6 +7,7 @@ import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private EditText mHostname;
     private EditText mPort;
+    private static final String TAG = "SettingsActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,14 +35,13 @@ public class SettingsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mHostname = (EditText)findViewById(R.id.set_hostname_input);
-        mPort = (EditText)findViewById(R.id.set_port_input);
+        mHostname = (EditText) findViewById(R.id.set_hostname_input);
+        mPort = (EditText) findViewById(R.id.set_port_input);
 
         mHostname.setText(SharedPreferenceManager.getInstance(this).getSavedIpAddress());
-        String port = SharedPreferenceManager.getInstance(this).getSavedPort();
-        if (!port.equals("")) {
-            mPort.setText(port);
-        }
+        int port = SharedPreferenceManager.getInstance(this).getSavedPort();
+
+        mPort.setText(String.valueOf(port));
 
         // Show the Up button in the action bar.
         ActionBar actionBar = getSupportActionBar();
@@ -66,11 +67,16 @@ public class SettingsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_save:
                 String hostname = mHostname.getText().toString();
-                String port = mPort.getText().toString();
+                int port = 0;
+                try {
+                    port = Integer.parseInt(mPort.getText().toString());
+                } catch (NumberFormatException e) {
+                    Log.e(TAG, "onOptionsItemSelected: ", e);
+                }
                 if (Validator.isValidIpAddress(hostname) && Validator.isValidPort(port)) {
                     SharedPreferenceManager.getInstance(this).saveServerData(hostname, port);
-                }
-                else {
+                    Snackbar.make(mPort, "Settings updated successfully.", Snackbar.LENGTH_LONG).show();
+                } else {
                     Snackbar.make(mPort, "Given server data is invalid", Snackbar.LENGTH_LONG).show();
                 }
                 return true;

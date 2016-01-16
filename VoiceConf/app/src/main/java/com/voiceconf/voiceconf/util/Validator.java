@@ -15,14 +15,8 @@ public class Validator {
         return m.find();
     }
 
-    public static boolean isValidPort(String text) {
-        int port;
-        try {
-            port = Integer.parseInt(text);
-        } catch (NumberFormatException e) {
-            return false;
-        }
-        return !(port < 0 || port > 65535);
+    public static boolean isValidPort(int port) {
+        return !(port < 1024 || port > 65535);
     }
 
     public static boolean isValidEmail(String text) {

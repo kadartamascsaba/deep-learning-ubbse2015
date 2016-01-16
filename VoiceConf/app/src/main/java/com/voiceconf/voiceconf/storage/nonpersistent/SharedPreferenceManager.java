@@ -16,7 +16,7 @@ public class SharedPreferenceManager {
     private SharedPreferences mSharedPrefs = null;
 
     public SharedPreferenceManager(Context context) {
-        this.mSharedPrefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        mSharedPrefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
     public static SharedPreferenceManager getInstance(Context context) {
@@ -27,20 +27,19 @@ public class SharedPreferenceManager {
         return sInstance;
     }
 
-    public void saveServerData(String ip, String port) {
+    public void saveServerData(String ip, int port) {
         SharedPreferences.Editor editor = this.mSharedPrefs.edit();
         editor.putString(KEY_IP, ip);
-        editor.putString(KEY_PORT, port);
-        // TODO CR: [BAttila | High] Test saveing the setting server parameters. [BAttila]
+        editor.putInt(KEY_PORT, port);
         editor.apply();
     }
 
     public String getSavedIpAddress() {
-        return mSharedPrefs.getString(KEY_IP, "");
+        return mSharedPrefs.getString(KEY_IP, "192.168.0.16");
     }
 
-    public String getSavedPort() {
-        return mSharedPrefs.getString(KEY_PORT, "");
+    public int getSavedPort() {
+        return mSharedPrefs.getInt(KEY_PORT, 6789);
     }
 
 }

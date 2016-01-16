@@ -1,13 +1,15 @@
-## Description of the server of the VoiceConf application 
+### Description of the server of the VoiceConf application 
 ### Table of contents
 * Version
 * Requirements
 * Installation
+* WARNING!
 
 ### Requirements
  * python 2.7
  * py2exe 0.6.9
- 
+ * Theano lib
+ * pyaudio
 
 ### Installation
 #### Building
@@ -23,3 +25,7 @@ The resulting executable is for command-line use and it does not require any com
 cd dist
 server
 ```
+
+### WARNING!
+
+Be sure to rewrite all IP adresses to local machine's IP adress

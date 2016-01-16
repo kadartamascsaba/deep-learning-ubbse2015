@@ -51,7 +51,11 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/user_name"
         android:layout_toEndOf="@id/user_avatar"
+        android:layout_toLeftOf="@+id/decline"
         android:layout_toRightOf="@id/user_avatar"
+        android:lines="1"
+        android:layout_toStartOf="@id/decline"
+        android:ellipsize="end"
         android:textSize="@dimen/text_size_body"
         tools:text="jhon.snow@gmail.com" />
 
