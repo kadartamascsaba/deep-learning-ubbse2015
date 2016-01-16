@@ -35,7 +35,7 @@ public class SharedPreferenceManager {
     }
 
     public String getSavedIpAddress() {
-        return mSharedPrefs.getString(KEY_IP, "");
+        return mSharedPrefs.getString(KEY_IP, "192.168.0.16");
     }
 
     public int getSavedPort() {
