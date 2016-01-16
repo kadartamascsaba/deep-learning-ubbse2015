@@ -32,10 +32,10 @@ def speaker_recognition():
 
 	while True:
 		for i, x in enumerate(data_for_deep_learning):
-			if len(x) >= 40:
+			if len(x) >= 60:
 				y = x[:]
 
-				WAVE_OUTPUT_FILENAME = "output" + i + ".wav"
+				WAVE_OUTPUT_FILENAME = "output" + str(i) + ".wav"
 
 				wf = wave.open(WAVE_OUTPUT_FILENAME, 'wb')
 				wf.setnchannels(CHANNELS)
@@ -46,9 +46,10 @@ def speaker_recognition():
 
 				person = nn.evaluate(WAVE_OUTPUT_FILENAME)
 
-				sock.sendto(person, (clients[i][0], 56799))
+				for c in clients:
+					sock.sendto(str(clients[i]) + " " + str(person), (c[0], 56799))
 
-				for j in range(0, 40):
+				for j in range(0, 60):
 					data_for_deep_learning[i].pop(0)
 
 class ClientHandler(SocketServer.BaseRequestHandler):
