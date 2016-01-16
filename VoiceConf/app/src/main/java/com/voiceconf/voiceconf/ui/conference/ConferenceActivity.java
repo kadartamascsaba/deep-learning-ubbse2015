@@ -1,5 +1,6 @@
 package com.voiceconf.voiceconf.ui.conference;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioFormat;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -53,8 +55,9 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ConferenceActivity extends AppCompatActivity implements Observer {
 
     //region CONSTANTS
-    private static final String TAG = "ConferenceActivity";
     private static final String CONFERENCE_ID = "conference_id";
+    private static final String STOP = "stop";
+    private static final String START = "start";
     //endregion
 
     //region VARIABLES
@@ -64,9 +67,28 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
     private Conference mConference;
     private TextView mSpeakerStarted;
     private TextView mSpeakerDuration;
-    private ImageButton mMute;
-    private FloatingActionButton startButton, stopButton;
-    private boolean mute;
+    private FloatingActionButton mStartConferenceButton;
+    private boolean isMicrophoneMuted;
+
+    //region COMMUNICATION RELATED VARIABLES
+
+    //region CONSTANTS
+    private static final int clientPort = 56789;
+    private static final int SAMPLE_RATE = 16000;
+    private static final int CHANNEL_CONFIG = AudioFormat.CHANNEL_OUT_STEREO;
+    private static final int AUDIO_FORMAT = AudioFormat.ENCODING_PCM_16BIT;
+    //endregion
+
+    //region VARIABLES
+    private static boolean communicationStatus = false;
+    private static DatagramSocket mSocketIn;
+    private static DatagramSocket mSocketOut;
+    private InetAddress destination;
+    private AudioRecord mRecorder = null;
+    private AudioTrack mTrack = null;
+    private int minBufSize = 4096;
+    private int serverPort;
+    //endregion
     //endregion
 
     //region LIFE CYCLE METHODS
@@ -75,15 +97,7 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conference);
 
-        serverPort = SharedPreferenceManager.getInstance(getApplicationContext()).getSavedPort();
-        ipAddress = SharedPreferenceManager.getInstance(getApplicationContext()).getSavedIpAddress();
-        try {
-            destination = InetAddress.getByName(ipAddress);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         // Show the Up button in the action bar.
@@ -93,15 +107,23 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
             actionBar.setDisplayShowTitleEnabled(false);
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        isMicrophoneMuted = false;
+        final FloatingActionButton muteMicFab = (FloatingActionButton) findViewById(R.id.fab);
+        muteMicFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "This action will mute or un-mute your microphone.", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                isMicrophoneMuted = !isMicrophoneMuted;
+                AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                audioManager.setMicrophoneMute(isMicrophoneMuted);
+                if (isMicrophoneMuted) {
+                    muteMicFab.setImageDrawable(ContextCompat.getDrawable(ConferenceActivity.this, R.drawable.ic_mic_white_24dp));
+                } else {
+                    muteMicFab.setImageDrawable(ContextCompat.getDrawable(ConferenceActivity.this, R.drawable.ic_mic_off_white_24dp));
+                }
             }
         });
 
+        // Get current conference from intent
         mConference = VoiceConfApplication.sDataManager.getConference(getIntent().getStringExtra(CONFERENCE_ID));
 
         mAdapter = new InviteeAdapter(false);
@@ -115,13 +137,17 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
         mSpeakerDuration = (TextView) findViewById(R.id.conference_duration);
 
         //Toolbar setup
-        final View.OnClickListener underDevelopment = new View.OnClickListener() {
+        View.OnClickListener underDevelopment = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Snackbar.make(mSpeakerAvatar, R.string.under_development, Snackbar.LENGTH_LONG).show();
             }
         };
+
+        // Invite more people
         findViewById(R.id.conference_invite_more).setOnClickListener(underDevelopment);
+
+        // Synchronise with database
         findViewById(R.id.conference_sync).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,40 +156,65 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
             }
         });
 
-        mute = false;
-        mMute = (ImageButton) findViewById(R.id.conference_mute);
-        mMute.setOnClickListener(new View.OnClickListener() {
+        ImageButton muteSpeaker = (ImageButton) findViewById(R.id.conference_mute);
+        muteSpeaker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mute = !mute;
-                AudioManager myAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-                myAudioManager.setMicrophoneMute(mute);
-                if (mute) {
-                    mMute.setImageResource(R.drawable.ic_volume_up_white_24dp);
-                } else {
-                    mMute.setImageResource(R.drawable.ic_volume_off_white_24dp);
-                }
+
             }
         });
         findViewById(R.id.conference_settings).setOnClickListener(underDevelopment);
 
-        findViewById(R.id.conference_close).setOnClickListener(new View.OnClickListener() {
+        // Handle conference start an stop
+        mStartConferenceButton = (FloatingActionButton) findViewById(R.id.conference_start);
+        final FloatingActionButton stopConferenceButton = (FloatingActionButton) findViewById(R.id.conference_close);
+        mStartConferenceButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: ");
-                closeConference();
+            public void onClick(View arg0) {
+                communicationStatus = true;
+                recordSound();
+                playSound();
+                mStartConferenceButton.setVisibility(View.GONE);
+                stopConferenceButton.setVisibility(View.VISIBLE);
             }
         });
+        stopConferenceButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                communicationStatus = false;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            new DatagramSocket().send(new DatagramPacket(STOP.getBytes(), STOP.getBytes().length, destination, serverPort));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
+                mRecorder.release();
+                mTrack.release();
 
-        startButton = (FloatingActionButton) findViewById(R.id.fab);
-        stopButton = (FloatingActionButton) findViewById(R.id.conference_close);
-        startButton.setOnClickListener(startListener);
-        stopButton.setOnClickListener(stopListener);
+                // If the current user is the owner the conference will be closed
+                if (ParseUser.getCurrentUser().getObjectId().equals(mConference.getOwner().getObjectId())) {
+                    mConference.setClosed(true);
+                    mConference.saveInBackground();
+                }
+                finish();
+            }
+        });
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+        serverPort = SharedPreferenceManager.getInstance(getApplicationContext()).getSavedPort();
+        String ipAddress = SharedPreferenceManager.getInstance(getApplicationContext()).getSavedIpAddress();
+        try {
+            destination = InetAddress.getByName(ipAddress);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
         updateScreen();
         VoiceConfApplication.sDataManager.addObserver(this);
     }
@@ -192,14 +243,7 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
         return intent;
     }
 
-    private void closeConference() {
-        if (ParseUser.getCurrentUser().getObjectId().equals(mConference.getOwner().getObjectId())) {
-            mConference.setClosed(true);
-            mConference.saveInBackground();
-        }
-        finish();
-    }
-
+    @SuppressLint("SetTextI18n")
     private void updateScreen() {
         mConference = VoiceConfApplication.sDataManager.getConference(getIntent().getStringExtra(CONFERENCE_ID));
         if (mConference != null) {
@@ -214,7 +258,7 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
 
             if (mConference.isClosed()) {
                 ((TextView) findViewById(R.id.speaker_title)).setText(R.string.owner);
-
+                mStartConferenceButton.setVisibility(View.GONE);
                 findViewById(R.id.conference_toolbar).setVisibility(View.GONE);
                 findViewById(R.id.conference_close).setVisibility(View.GONE);
                 findViewById(R.id.fab).setVisibility(View.GONE);
@@ -238,74 +282,25 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
     }
 
     // region COMMUNICATION
-    private static DatagramSocket socketOut;
-    private static DatagramSocket socketIn;
-
-    private InetAddress destination;
-    private String ipAddress;
-    private int serverPort;
-    private int clientPort = 56789;
-
-    private int sampleRate = 16000;
-    private int channelConfig = AudioFormat.CHANNEL_OUT_STEREO;
-    private int audioFormat = AudioFormat.ENCODING_PCM_16BIT;
-    private int minBufSize = 4096;
-
-    private static boolean status = false;
-
-    private AudioRecord recorder = null;
-    private AudioTrack track = null;
-
-    private final View.OnClickListener stopListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View arg0) {
-            status = false;
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        new DatagramSocket().send(new DatagramPacket("stop".getBytes(), "stop".getBytes().length, destination, serverPort));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }).start();
-            recorder.release();
-            track.release();
-        }
-    };
-    private final View.OnClickListener startListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View arg0) {
-            status = true;
-            startStreaming();
-        }
-    };
-
-    private void startStreaming() {
-        recordSound();
-        playSound();
-    }
-
     private void recordSound() {
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    socketOut = new DatagramSocket();
+                    mSocketOut = new DatagramSocket();
                     byte[] buffer = new byte[minBufSize];
 
                     DatagramPacket packet;
-                    packet = new DatagramPacket("start".getBytes(), "start".getBytes().length, destination, serverPort);
-                    socketOut.send(packet);
-                    recorder = new AudioRecord(MediaRecorder.AudioSource.MIC, sampleRate, channelConfig, audioFormat, minBufSize);
-                    recorder.startRecording();
+                    packet = new DatagramPacket(START.getBytes(), START.getBytes().length, destination, serverPort);
+                    mSocketOut.send(packet);
+                    mRecorder = new AudioRecord(MediaRecorder.AudioSource.MIC, SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT, minBufSize);
+                    mRecorder.startRecording();
 
-                    while (status == true) {
-                        minBufSize = recorder.read(buffer, 0, buffer.length);
+                    while (communicationStatus) {
+                        minBufSize = mRecorder.read(buffer, 0, buffer.length);
 
                         packet = new DatagramPacket(buffer, buffer.length, destination, serverPort);
-                        socketOut.send(packet);
+                        mSocketOut.send(packet);
                     }
 
                 } catch (UnknownHostException e) {
@@ -319,23 +314,21 @@ public class ConferenceActivity extends AppCompatActivity implements Observer {
     }
 
     private void playSound() {
-
         Thread playThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    socketIn = new DatagramSocket(clientPort);
-
-                    track = new AudioTrack(AudioManager.STREAM_MUSIC, sampleRate, channelConfig, audioFormat, minBufSize, AudioTrack.MODE_STREAM);
-                    track.play();
+                    mSocketIn = new DatagramSocket(clientPort);
+                    mTrack = new AudioTrack(AudioManager.STREAM_MUSIC, SAMPLE_RATE, CHANNEL_CONFIG, AUDIO_FORMAT, minBufSize, AudioTrack.MODE_STREAM);
+                    mTrack.play();
 
                     try {
                         byte[] buf = new byte[minBufSize];
 
-                        while (status == true) {
+                        while (communicationStatus) {
                             DatagramPacket pack = new DatagramPacket(buf, minBufSize);
-                            socketIn.receive(pack);
-                            track.write(pack.getData(), 0, pack.getLength());
+                            mSocketIn.receive(pack);
+                            mTrack.write(pack.getData(), 0, pack.getLength());
                         }
                     } catch (SocketException se) {
                         Log.e("", "SocketException: " + se.toString());

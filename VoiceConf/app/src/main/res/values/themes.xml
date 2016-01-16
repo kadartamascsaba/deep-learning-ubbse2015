@@ -18,7 +18,7 @@
     </style>
 
     <style name="GreenTheme" parent="AppTheme">
-        <item name="colorAccent">#52FF52</item>
+        <item name="colorAccent">#22DD22</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
