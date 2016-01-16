@@ -47,7 +47,7 @@ def speaker_recognition():
 				person = nn.evaluate(WAVE_OUTPUT_FILENAME)
 
 				for c in clients:
-					sock.sendto(str(person), (c[0], 56799))
+					sock.sendto(str(person), (c[0], 56798))
 
 				data_for_deep_learning[i] = []
 
@@ -92,7 +92,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
 				data_for_deep_learning[index].append(data)
 				for x in clients:
 					if x[0] != self.client_address[0]:
-						address = (x[0], 56789)
+						address = (x[0], 56788)
 						socket.sendto(client_frame[index].pop(0), address)
 			else:
 				self.flush()
