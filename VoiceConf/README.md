@@ -2,6 +2,7 @@
 ### Table of contents
 * Requirements
 * Installation
+* Setup
 
 We recommend Android Studio for development (v1.4+).
 You can open the Project by selecting the VoiceConf directory or the build.gradle file within it.
@@ -43,3 +44,7 @@ Run Unit tests from the command-line:
 After the build a debug apk is generated which you can find it in the ```/VoiceConf/app/build/outputs/apk/app-debug.apk```.
 
 This apk can be installed on any android device by opening it.
+
+### Setup
+
+After the user is loggedin, the servers ip adress must be updated in the settings section.
