@@ -24,7 +24,7 @@
     <string name="version">v0.1.0.4</string>
 
     <!--History-->
-    <string name="history_placeholder_text">Your conference\n history will appear here …</string>
+    <string name="history_placeholder_text">Your LIVE conferences\n and history will appear here …</string>
     <string name="history_guide_text">Start a new conference by tapping\n the action button!</string>
 
     <!--Friends-->

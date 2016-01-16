@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.voiceconf.voiceconf.R;
 import com.voiceconf.voiceconf.storage.nonpersistent.SharedPreferenceManager;
@@ -36,8 +35,8 @@ public class SettingsActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        mHostname = (EditText)findViewById(R.id.set_hostname_input);
-        mPort = (EditText)findViewById(R.id.set_port_input);
+        mHostname = (EditText) findViewById(R.id.set_hostname_input);
+        mPort = (EditText) findViewById(R.id.set_port_input);
 
         mHostname.setText(SharedPreferenceManager.getInstance(this).getSavedIpAddress());
         int port = SharedPreferenceManager.getInstance(this).getSavedPort();
@@ -71,13 +70,13 @@ public class SettingsActivity extends AppCompatActivity {
                 int port = 0;
                 try {
                     port = Integer.parseInt(mPort.getText().toString());
-                }catch (NumberFormatException e){
+                } catch (NumberFormatException e) {
                     Log.e(TAG, "onOptionsItemSelected: ", e);
                 }
                 if (Validator.isValidIpAddress(hostname) && Validator.isValidPort(port)) {
                     SharedPreferenceManager.getInstance(this).saveServerData(hostname, port);
-                }
-                else {
+                    Snackbar.make(mPort, "Settings updated successfully.", Snackbar.LENGTH_LONG).show();
+                } else {
                     Snackbar.make(mPort, "Given server data is invalid", Snackbar.LENGTH_LONG).show();
                 }
                 return true;
