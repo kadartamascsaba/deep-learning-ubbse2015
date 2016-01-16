@@ -18,8 +18,8 @@ def result_of_deep_learning():
 
 def udp_stream_out():
     global udp
-    udp.sendto("start", ("192.168.0.103", 6789))   
-
+    udp.sendto("start", ("192.168.0.103", 6789))
+    
     while True:
         if len(frames1) > 0:
             udp.sendto(frames1.pop(0), ("192.168.0.103", 6789))
