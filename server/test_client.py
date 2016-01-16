@@ -1,4 +1,5 @@
 import pyaudio
+import sys
 import socket
 import audioop
 from threading import Thread
@@ -11,18 +12,18 @@ udp_for_deep_learning = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 def result_of_deep_learning():
     global udp_for_deep_learning
-    udp_for_deep_learning.bind(("192.168.0.16", 56799))
+    udp_for_deep_learning.bind((str(sys.argv[1]), 56799))
     while True:
-        data, addr = sock.recvfrom(256) # buffer size is 1024 bytes
+        data, addr = udp_for_deep_learning.recvfrom(256) # buffer size is 1024 bytes
         print "received message:", data
 
 def udp_stream_out():
     global udp
-    udp.sendto("start", ("192.168.0.16", 6789))   
+    udp.sendto("start", (str(sys.argv[2]), int(sys.argv[3])))   
 
     while True:
         if len(frames1) > 0:
-            udp.sendto(frames1.pop(0), ("192.168.0.16", 6789))
+            udp.sendto(frames1.pop(0), (str(sys.argv[2]), int(sys.argv[3]))
 
     udp.close()
 
